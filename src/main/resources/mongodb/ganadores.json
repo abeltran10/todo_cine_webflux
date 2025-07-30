@@ -1,0 +1,495 @@
+[{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd916"
+  },
+  "premioId": "1",
+  "categoriaId": "1",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd917"
+  },
+  "premioId": "1",
+  "categoriaId": "1",
+  "anyo": 2025,
+  "movieId": "1174481"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd918"
+  },
+  "premioId": "1",
+  "categoriaId": "1",
+  "anyo": 2025,
+  "movieId": "1215185"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd919"
+  },
+  "premioId": "1",
+  "categoriaId": "2",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd91a"
+  },
+  "premioId": "1",
+  "categoriaId": "2",
+  "anyo": 2025,
+  "movieId": "1160878"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd91b"
+  },
+  "premioId": "1",
+  "categoriaId": "3",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd91c"
+  },
+  "premioId": "1",
+  "categoriaId": "3",
+  "anyo": 2025,
+  "movieId": "977548"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd91d"
+  },
+  "premioId": "1",
+  "categoriaId": "4",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd91e"
+  },
+  "premioId": "1",
+  "categoriaId": "4",
+  "anyo": 2025,
+  "movieId": "1088514"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd91f"
+  },
+  "premioId": "1",
+  "categoriaId": "5",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd920"
+  },
+  "premioId": "1",
+  "categoriaId": "5",
+  "anyo": 2025,
+  "movieId": "1174481"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd921"
+  },
+  "premioId": "1",
+  "categoriaId": "6",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd922"
+  },
+  "premioId": "1",
+  "categoriaId": "6",
+  "anyo": 2025,
+  "movieId": "1174481"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd923"
+  },
+  "premioId": "1",
+  "categoriaId": "7",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd924"
+  },
+  "premioId": "1",
+  "categoriaId": "7",
+  "anyo": 2025,
+  "movieId": "977548"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd925"
+  },
+  "premioId": "1",
+  "categoriaId": "8",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd926"
+  },
+  "premioId": "1",
+  "categoriaId": "8",
+  "anyo": 2025,
+  "movieId": "1195100"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd927"
+  },
+  "premioId": "1",
+  "categoriaId": "9",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd928"
+  },
+  "premioId": "1",
+  "categoriaId": "9",
+  "anyo": 2025,
+  "movieId": "1088514"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd929"
+  },
+  "premioId": "1",
+  "categoriaId": "10",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd92a"
+  },
+  "premioId": "1",
+  "categoriaId": "10",
+  "anyo": 2025,
+  "movieId": "1118028"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd92b"
+  },
+  "premioId": "1",
+  "categoriaId": "11",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd92c"
+  },
+  "premioId": "1",
+  "categoriaId": "11",
+  "anyo": 2025,
+  "movieId": "977548"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd92d"
+  },
+  "premioId": "1",
+  "categoriaId": "12",
+  "anyo": 2024,
+  "movieId": "906126"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd92e"
+  },
+  "premioId": "1",
+  "categoriaId": "12",
+  "anyo": 2025,
+  "movieId": "1118028"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd92f"
+  },
+  "premioId": "1",
+  "categoriaId": "13",
+  "anyo": 2024,
+  "movieId": "816888"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd930"
+  },
+  "premioId": "1",
+  "categoriaId": "13",
+  "anyo": 2025,
+  "movieId": "1160878"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd931"
+  },
+  "premioId": "1",
+  "categoriaId": "14",
+  "anyo": 2024,
+  "movieId": "1053600"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd932"
+  },
+  "premioId": "1",
+  "categoriaId": "14",
+  "anyo": 2025,
+  "movieId": "1174481"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd933"
+  },
+  "premioId": "1",
+  "categoriaId": "15",
+  "anyo": 2024,
+  "movieId": "1053600"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd934"
+  },
+  "premioId": "1",
+  "categoriaId": "15",
+  "anyo": 2025,
+  "movieId": "1160878"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd935"
+  },
+  "premioId": "1",
+  "categoriaId": "16",
+  "anyo": 2024,
+  "movieId": "1032760"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd936"
+  },
+  "premioId": "1",
+  "categoriaId": "16",
+  "anyo": 2025,
+  "movieId": "1000837"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd937"
+  },
+  "premioId": "1",
+  "categoriaId": "17",
+  "anyo": 2024,
+  "movieId": "828936"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd938"
+  },
+  "premioId": "1",
+  "categoriaId": "17",
+  "anyo": 2025,
+  "movieId": "1215185"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd939"
+  },
+  "premioId": "1",
+  "categoriaId": "18",
+  "anyo": 2024,
+  "movieId": "1138248"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd93a"
+  },
+  "premioId": "1",
+  "categoriaId": "18",
+  "anyo": 2025,
+  "movieId": "1195100"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd93b"
+  },
+  "premioId": "1",
+  "categoriaId": "19",
+  "anyo": 2024,
+  "movieId": "997294"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd93c"
+  },
+  "premioId": "1",
+  "categoriaId": "19",
+  "anyo": 2025,
+  "movieId": "1174481"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd93d"
+  },
+  "premioId": "1",
+  "categoriaId": "20",
+  "anyo": 2024,
+  "movieId": "838240"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd93e"
+  },
+  "premioId": "1",
+  "categoriaId": "20",
+  "anyo": 2025,
+  "movieId": "1280400"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd93f"
+  },
+  "premioId": "1",
+  "categoriaId": "21",
+  "anyo": 2024,
+  "movieId": "1120881"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd940"
+  },
+  "premioId": "1",
+  "categoriaId": "21",
+  "anyo": 2025,
+  "movieId": "1217174"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd941"
+  },
+  "premioId": "1",
+  "categoriaId": "22",
+  "anyo": 2024,
+  "movieId": "1211711"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd942"
+  },
+  "premioId": "1",
+  "categoriaId": "22",
+  "anyo": 2025,
+  "movieId": "1393865"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd943"
+  },
+  "premioId": "1",
+  "categoriaId": "23",
+  "anyo": 2024,
+  "movieId": "1181273"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd944"
+  },
+  "premioId": "1",
+  "categoriaId": "23",
+  "anyo": 2025,
+  "movieId": "1258603"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd945"
+  },
+  "premioId": "1",
+  "categoriaId": "24",
+  "anyo": 2024,
+  "movieId": "838240"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd946"
+  },
+  "premioId": "1",
+  "categoriaId": "24",
+  "anyo": 2025,
+  "movieId": "1088514"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd947"
+  },
+  "premioId": "1",
+  "categoriaId": "25",
+  "anyo": 2024,
+  "movieId": "1053600"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd948"
+  },
+  "premioId": "1",
+  "categoriaId": "25",
+  "anyo": 2025,
+  "movieId": "1218193"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd949"
+  },
+  "premioId": "1",
+  "categoriaId": "26",
+  "anyo": 2024,
+  "movieId": "915935"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd94a"
+  },
+  "premioId": "1",
+  "categoriaId": "26",
+  "anyo": 2025,
+  "movieId": "974950"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd94b"
+  },
+  "premioId": "1",
+  "categoriaId": "27",
+  "anyo": 2024,
+  "movieId": "1171406"
+},
+{
+  "_id": {
+    "$oid": "6889220bc8df0b7b529cd94c"
+  },
+  "premioId": "1",
+  "categoriaId": "27",
+  "anyo": 2025,
+  "movieId": "1317099"
+}]

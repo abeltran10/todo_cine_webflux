@@ -1,0 +1,108 @@
+[{
+  "_id": "1",
+  "nombre": "Mejor película"
+},
+{
+  "_id": "2",
+  "nombre": "Actor revelación"
+},
+{
+  "_id": "3",
+  "nombre": "Dirección"
+},
+{
+  "_id": "4",
+  "nombre": "Música original"
+},
+{
+  "_id": "5",
+  "nombre": "Dirección de producción"
+},
+{
+  "_id": "6",
+  "nombre": "Efectos especiales"
+},
+{
+  "_id": "7",
+  "nombre": "Sonido"
+},
+{
+  "_id": "8",
+  "nombre": "Maquillaje y peluquería"
+},
+{
+  "_id": "9",
+  "nombre": "Dirección de fotografía"
+},
+{
+  "_id": "10",
+  "nombre": "Diseño de vestuario"
+},
+{
+  "_id": "11",
+  "nombre": "Montaje"
+},
+{
+  "_id": "12",
+  "nombre": "Dirección artística"
+},
+{
+  "_id": "13",
+  "nombre": "Actriz rebelación"
+},
+{
+  "_id": "14",
+  "nombre": "Actriz reparto"
+},
+{
+  "_id": "15",
+  "nombre": "Dirección novel"
+},
+{
+  "_id": "16",
+  "nombre": "Película Iberoamericana"
+},
+{
+  "_id": "17",
+  "nombre": "Actriz protagonista"
+},
+{
+  "_id": "18",
+  "nombre": "Actor protagonista"
+},
+{
+  "_id": "19",
+  "nombre": "Actor reparto"
+},
+{
+  "_id": "20",
+  "nombre": "Película de animación"
+},
+{
+  "_id": "21",
+  "nombre": "Cortometraje de ficción"
+},
+{
+  "_id": "22",
+  "nombre": "Cortometraje documental"
+},
+{
+  "_id": "23",
+  "nombre": "Cortometraje de animación"
+},
+{
+  "_id": "24",
+  "nombre": "Guión adaptado"
+},
+{
+  "_id": "25",
+  "nombre": "Guión original"
+},
+{
+  "_id": "26",
+  "nombre": "Película europea"
+},
+{
+  "_id": "27",
+  "nombre": "Película documental"
+}]

@@ -39,36 +39,38 @@ public class MovieServiceImpl extends BaseServiceImpl implements MovieService {
 
     @Override
     public Mono<MovieDetailDTO> getMovieDetailById(String id) {
-        return tmdbService.getMovieById(id)
-                .flatMap(movieMap -> {
-                    if (movieMap.get("id") == null) {
-                        return Mono.error(new NotFoudException(MOVIE_NOTFOUND));
-                    }
+        // 1. Ejecutamos en paralelo: Pedir la peli a TMDB y obtener el Usuario del contexto
+        return Mono.zip(tmdbService.getMovieById(id), getCurrentUserId())
+                .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
+                .flatMap(tuple -> {
+                    Map<String, Object> movieMap = tuple.getT1(); // Resultado de TMDB
+                    String userId = tuple.getT2();               // Resultado de getCurrentUserId()
 
                     MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 
+                    // 2. Buscamos nuestros datos locales (Stats y Premios)
                     return movieDAO.findById(id)
-                            .flatMap(dbMovie -> {
-                                // dbMovie existe
-                                MovieDTO dbMovieDTO = MovieMapper.toDTO(dbMovie);
-                                movieDTO.setVotosMediaTC(dbMovieDTO.getVotosMediaTC());
-                                movieDTO.setTotalVotosTC(dbMovieDTO.getTotalVotosTC());
-                                return Mono.just(movieDTO);
+                            .map(movie -> {
+                                movieDTO.setVotosMediaTC(movie.getVotosMediaTC());
+                                movieDTO.setTotalVotosTC(movie.getTotalVotosTC());
+                                // Aquí ya tendrías acceso a movie.getPremios()
+                                return movieDTO;
                             })
-                            .switchIfEmpty(Mono.just(movieDTO)) // si no existe en BD, seguimos con el movieDTO original
-                            .flatMap(updatedMovieDTO ->
-                                    getCurrentUserId()
-                                            .flatMap(userId -> usuarioMovieDAO.findByUsuarioIdAndMovieId(userId, id))
-                                            .flatMap(um -> {
-                                                boolean favorito = "S".equals(um.getFavoritos());
-                                                boolean vista = "S".equals(um.getVista());
-                                                Double voto = um.getVoto();
-                                                return Mono.just(new MovieDetailDTO(updatedMovieDTO, favorito, voto, vista));
-                                            })
-                                            .switchIfEmpty(Mono.just(new MovieDetailDTO(updatedMovieDTO, false, null, false)))
+                            .defaultIfEmpty(movieDTO) // Si no existe en nuestra DB local
+
+                            // 3. Buscamos la interacción de ese usuario concreto con esa película
+                            .flatMap(dto -> usuarioMovieDAO.findByUsuarioIdAndMovieId(userId, id)
+                                    .map(um -> new MovieDetailDTO(
+                                            dto,
+                                            "S".equals(um.getFavoritos()),
+                                            um.getVoto(),
+                                            "S".equals(um.getVista())
+                                    ))
+                                    // Si no hay interacción previa, valores por defecto
+                                    .switchIfEmpty(Mono.just(new MovieDetailDTO(dto, false, null, false)))
                             );
                 })
-                .onErrorMap(IOException.class, ex -> new BadGatewayException(TMDB_ERROR));
+                .onErrorMap(IOException.class, e -> new BadGatewayException(TMDB_ERROR));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.todocine_webflux.utils.mappers;
 
-import com.todocine_webflux.dto.UsuarioDTO;
+import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 
 public class UserMapper {

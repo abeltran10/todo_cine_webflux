@@ -4,7 +4,7 @@ import com.todocine_webflux.dao.CategoriaDAO;
 import com.todocine_webflux.dao.GanadorRepo;
 import com.todocine_webflux.dao.MovieDAO;
 import com.todocine_webflux.dao.PremioDAO;
-import com.todocine_webflux.dto.GanadorDTO;
+import com.todocine_webflux.dto.response.GanadorDTO;
 import com.todocine_webflux.entities.Categoria;
 import com.todocine_webflux.entities.Movie;
 import com.todocine_webflux.entities.Premio;
@@ -12,7 +12,6 @@ import com.todocine_webflux.service.PremioService;
 import com.todocine_webflux.utils.Paginator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;

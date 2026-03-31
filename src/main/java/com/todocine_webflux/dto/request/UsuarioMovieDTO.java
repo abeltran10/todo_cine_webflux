@@ -1,4 +1,4 @@
-package com.todocine_webflux.dto;
+package com.todocine_webflux.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

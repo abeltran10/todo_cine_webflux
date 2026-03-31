@@ -1,12 +1,10 @@
 package com.todocine_webflux.controllers;
 
-import com.todocine_webflux.dto.GanadorDTO;
 import com.todocine_webflux.service.PremioService;
-import com.todocine_webflux.utils.Paginator;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -17,14 +15,25 @@ public class PremioController {
     @Autowired
     private PremioService premioService;
 
+    @Autowired
+    private CategoriaPremioService categoriaPremioService;
 
-    @GetMapping("/{id}/anyos/{anyo}")
-    public Mono<ResponseEntity<Paginator<GanadorDTO>>> getPremioByCodigoAnyo(@NotNull @PathVariable("id") String id,
-                                                                             @NotNull @PathVariable("anyo") Integer anyo,
-                                                                             @NotNull @RequestParam("pagina") Integer page) {
-        return premioService.getPremioByCodigoAnyo(id, anyo, page)
-                .map(ResponseEntity::ok);
+    @GetMapping
+    public Flux<PremioDTO> getPremios() {
+        // Flux emite N elementos uno a uno.
+        return premioService.getPremios();
+    }
 
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<PremioDTO>> getPremioById(@NotNull @PathVariable("id") String id) {
+        return premioService.getPremioById(id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
 
+    @GetMapping("/{id}/categorias")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Flux<CategoriaDTO> getCategorias(@NotNull @PathVariable("id") String id) {
+        return categoriaPremioService.getCategorias(id);
     }
 }

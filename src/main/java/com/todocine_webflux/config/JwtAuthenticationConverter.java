@@ -1,7 +1,7 @@
 package com.todocine_webflux.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.todocine_webflux.dto.UsuarioDTO;
+import com.todocine_webflux.dto.response.UsuarioDTO;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +11,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class JwtAuthenticationConverter implements ServerAuthenticationConverter {
 

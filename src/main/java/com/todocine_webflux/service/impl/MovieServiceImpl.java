@@ -2,11 +2,8 @@ package com.todocine_webflux.service.impl;
 
 import com.todocine_webflux.dao.MovieDAO;
 import com.todocine_webflux.dao.UsuarioMovieDAO;
-import com.todocine_webflux.dto.MovieDTO;
-import com.todocine_webflux.dto.MovieDetailDTO;
-import com.todocine_webflux.entities.Movie;
-import com.todocine_webflux.entities.Usuario;
-import com.todocine_webflux.entities.UsuarioMovie;
+import com.todocine_webflux.dto.response.MovieDTO;
+import com.todocine_webflux.dto.response.MovieDetailDTO;
 import com.todocine_webflux.exceptions.BadGatewayException;
 import com.todocine_webflux.exceptions.BadRequestException;
 import com.todocine_webflux.exceptions.NotFoudException;

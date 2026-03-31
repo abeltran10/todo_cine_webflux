@@ -1,13 +1,12 @@
 package com.todocine_webflux.controllers;
 
 import com.todocine_webflux.config.Constants;
-import com.todocine_webflux.dto.MovieDTO;
-import com.todocine_webflux.dto.MovieDetailDTO;
+import com.todocine_webflux.dto.response.MovieDTO;
+import com.todocine_webflux.dto.response.MovieDetailDTO;
 import com.todocine_webflux.service.MovieService;
 import com.todocine_webflux.utils.Paginator;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

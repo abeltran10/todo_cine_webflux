@@ -1,6 +1,6 @@
 package com.todocine_webflux.utils.mappers;
 
-import com.todocine_webflux.dto.VideoDTO;
+import com.todocine_webflux.dto.response.VideoDTO;
 
 import java.util.Map;
 

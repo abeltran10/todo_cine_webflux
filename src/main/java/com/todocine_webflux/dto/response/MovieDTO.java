@@ -1,4 +1,4 @@
-package com.todocine_webflux.dto;
+package com.todocine_webflux.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieDetailDTO {
+public class MovieDTO {
+
 
     @JsonProperty("id")
     @NotBlank
@@ -56,15 +57,6 @@ public class MovieDetailDTO {
     @JsonProperty("videos")
     private List<VideoDTO> videoDTOS;
 
-    @JsonProperty("favoritos")
-    private Boolean favoritos;
-
-    @JsonProperty("voto")
-    private Double voto;
-
-    @JsonProperty("vista")
-    private Boolean vista;
-
     @JsonProperty("total_votos_TC")
     @NotNull
     private Integer totalVotosTC;
@@ -73,27 +65,41 @@ public class MovieDetailDTO {
     @NotNull
     private Double votosMediaTC;
 
-    public MovieDetailDTO() {
+    public MovieDTO() {
     }
 
-    public MovieDetailDTO(MovieDTO movieDTO, Boolean favoritos, Double voto, Boolean vista) {
-        this.id = movieDTO.getId();
-        this.originalTitle = movieDTO.getOriginalTitle();
-        this.title = movieDTO.getTitle();
-        this.posterPath = movieDTO.getPosterPath();
-        this.overview = movieDTO.getOverview();
-        this.releaseDate = movieDTO.getReleaseDate();
-        this.popularity = movieDTO.getPopularity();
-        this.voteCount = movieDTO.getVoteCount();
-        this.voteAverage = movieDTO.getVoteAverage();
-        this.genreDTOS = movieDTO.getGenres();
-        this.originalLanguage = movieDTO.getOriginalLanguage();
-        this.videoDTOS = movieDTO.getVideos();
-        this.totalVotosTC = movieDTO.getTotalVotosTC();
-        this.votosMediaTC = movieDTO.getVotosMediaTC();
-        this.favoritos = favoritos;
-        this.voto = voto;
-        this.vista = vista;
+    public MovieDTO(String id) {
+        this.id = id;
+    }
+
+    public MovieDTO(String id, String originalTitle, String title, String posterPath, String overview, String releaseDate,
+                    Double popularity, Integer voteCount, Double voteAverage, List<GenreDTO> genreDTOS, String originalLanguage,
+                    List<VideoDTO> videoDTOS, Integer totalVotosTC, Double votosMediaTC) {
+        this.id = id;
+        this.originalTitle = originalTitle;
+        this.title = title;
+        this.posterPath = posterPath;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.popularity = popularity;
+        this.voteCount = voteCount;
+        this.voteAverage = voteAverage;
+        this.genreDTOS = genreDTOS;
+        this.originalLanguage = originalLanguage;
+        this.videoDTOS = videoDTOS;
+        this.totalVotosTC = totalVotosTC;
+        this.votosMediaTC = votosMediaTC;
+    }
+
+    public MovieDTO(String id, String originalTitle, String posterPath) {
+        this.id = id;
+        this.originalTitle = originalTitle;
+        this.posterPath = posterPath;
+    }
+
+    public MovieDTO(String id, String originalTitle) {
+        this.id = id;
+        this.originalTitle = originalTitle;
     }
 
     public String getId() {
@@ -168,11 +174,11 @@ public class MovieDetailDTO {
         this.voteAverage = voteAverage;
     }
 
-    public List<GenreDTO> getGenreDTOS() {
+    public List<GenreDTO> getGenres() {
         return genreDTOS;
     }
 
-    public void setGenreDTOS(List<GenreDTO> genreDTOS) {
+    public void setGenres(List<GenreDTO> genreDTOS) {
         this.genreDTOS = genreDTOS;
     }
 
@@ -184,36 +190,12 @@ public class MovieDetailDTO {
         this.originalLanguage = originalLanguage;
     }
 
-    public List<VideoDTO> getVideoDTOS() {
+    public List<VideoDTO> getVideos() {
         return videoDTOS;
     }
 
-    public void setVideoDTOS(List<VideoDTO> videoDTOS) {
+    public void setVideos(List<VideoDTO> videoDTOS) {
         this.videoDTOS = videoDTOS;
-    }
-
-    public Boolean getFavoritos() {
-        return favoritos;
-    }
-
-    public void setFavoritos(Boolean favoritos) {
-        this.favoritos = favoritos;
-    }
-
-    public Double getVoto() {
-        return voto;
-    }
-
-    public void setVoto(Double voto) {
-        this.voto = voto;
-    }
-
-    public Boolean getVista() {
-        return vista;
-    }
-
-    public void setVista(Boolean vista) {
-        this.vista = vista;
     }
 
     public Integer getTotalVotosTC() {
@@ -231,4 +213,5 @@ public class MovieDetailDTO {
     public void setVotosMediaTC(Double votosMediaTC) {
         this.votosMediaTC = votosMediaTC;
     }
+
 }

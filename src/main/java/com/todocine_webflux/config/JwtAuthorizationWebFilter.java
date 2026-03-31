@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.todocine_webflux.dto.UsuarioDTO;
+import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 import com.todocine_webflux.utils.mappers.UserMapper;
 import org.springframework.http.HttpStatus;

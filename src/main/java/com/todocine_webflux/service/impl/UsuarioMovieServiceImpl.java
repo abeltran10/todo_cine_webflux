@@ -1,12 +1,11 @@
 package com.todocine_webflux.service.impl;
 
-import com.todocine_webflux.config.Constants;
 import com.todocine_webflux.dao.MovieDAO;
 import com.todocine_webflux.dao.UsuarioMovieDAO;
 import com.todocine_webflux.dao.UsuarioMovieRepo;
-import com.todocine_webflux.dto.MovieDTO;
-import com.todocine_webflux.dto.MovieDetailDTO;
-import com.todocine_webflux.dto.UsuarioMovieDTO;
+import com.todocine_webflux.dto.response.MovieDTO;
+import com.todocine_webflux.dto.response.MovieDetailDTO;
+import com.todocine_webflux.dto.request.UsuarioMovieDTO;
 import com.todocine_webflux.entities.Movie;
 import com.todocine_webflux.entities.UsuarioMovie;
 import com.todocine_webflux.exceptions.NotFoudException;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 
 import java.util.Map;
 

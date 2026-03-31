@@ -1,7 +1,7 @@
 package com.todocine_webflux.service.impl;
 
 import com.todocine_webflux.dao.UsuarioDAO;
-import com.todocine_webflux.dto.UsuarioDTO;
+import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 import com.todocine_webflux.exceptions.BadRequestException;
 import com.todocine_webflux.exceptions.NotFoudException;
@@ -41,16 +41,6 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
                 .cast(UserDetails.class);
     }
 
-
-    @Override
-    public Mono<UsuarioDTO> getUsuarioByName(String username) {
-        log.info("getUsuarioByName -> {}", username);
-
-        return usuarioDAO.findByUsername(username)
-                .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))
-                .flatMap(this::checkCurrentUser) // verificación de autorización
-                .map(UserMapper::toDTO);
-    }
 
     @Override
     public Mono<UsuarioDTO> insertUsuario(UsuarioDTO dto) {

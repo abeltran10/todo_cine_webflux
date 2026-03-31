@@ -1,11 +1,14 @@
 package com.todocine_webflux.controllers;
 
+import com.todocine_webflux.dto.response.CategoriaDTO;
+import com.todocine_webflux.dto.response.PremioDTO;
 import com.todocine_webflux.service.PremioService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController

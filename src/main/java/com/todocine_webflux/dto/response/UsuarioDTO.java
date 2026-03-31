@@ -7,12 +7,12 @@ import jakarta.validation.constraints.NotBlank;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsuarioDTO {
 
-    private String id;
+    private Long id;
 
     @NotBlank
     private String username;
 
-    @NotBlank
+    @JsonIgnore
     private String password;
 
     @JsonIgnore
@@ -27,29 +27,56 @@ public class UsuarioDTO {
     @JsonIgnore
     private Boolean enabled;
 
+    @NotBlank
+    private String rol;
+
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String id) {
+    public UsuarioDTO(Long id) {
         this.id = id;
     }
 
-    public UsuarioDTO(String id, String username, String password) {
-        this.id = id;
+    public UsuarioDTO(String username, String password) {
         this.username = username;
         this.password = password;
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
     }
 
-    public String getId() {
+    public UsuarioDTO(Long id, String username, String rol) {
+        this.id = id;
+        this.username = username;
+        this.rol = rol;
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     public void setUsername(String username) {
@@ -95,4 +122,26 @@ public class UsuarioDTO {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", enabled=" + enabled +
+                '}';
+    }
 }
+

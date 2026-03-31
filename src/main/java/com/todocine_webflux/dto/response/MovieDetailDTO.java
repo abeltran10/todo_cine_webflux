@@ -11,7 +11,7 @@ import java.util.List;
 public class MovieDetailDTO {
 
     @JsonProperty("id")
-    @NotBlank
+    @NotNull
     private String id;
 
     @JsonProperty("original_title")

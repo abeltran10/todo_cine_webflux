@@ -1,29 +1,24 @@
 package com.todocine_webflux.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "premios")
 public class Premio {
 
-    @Id
-    private String id;
+    private String premioId;
 
     private String titulo;
+
+    private String categoria;
+
+    private Integer anyo;
 
     public Premio() {
     }
 
-    public Premio(String id) {
-        this.id = id;
+   public String getPremioId() {
+        return premioId;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setPremioId(String premioId) {
+        this.premioId = premioId;
     }
 
     public String getTitulo() {
@@ -32,5 +27,21 @@ public class Premio {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Integer getAnyo() {
+        return anyo;
+    }
+
+    public void setAnyo(Integer anyo) {
+        this.anyo = anyo;
     }
 }

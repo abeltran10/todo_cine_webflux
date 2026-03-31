@@ -3,6 +3,9 @@ package com.todocine_webflux.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document(collection = "movies")
 public class Movie {
 
@@ -30,6 +33,8 @@ public class Movie {
     private Integer totalVotosTC;
 
     private Double votosMediaTC;
+
+    private List<Premio> premios = new ArrayList<>();
 
     public Movie() {
     }
@@ -149,5 +154,13 @@ public class Movie {
 
     public void setVotosMediaTC(Double votosMediaTC) {
         this.votosMediaTC = votosMediaTC;
+    }
+
+    public List<Premio> getPremios() {
+        return premios;
+    }
+
+    public void setPremios(List<Premio> premios) {
+        this.premios = premios;
     }
 }

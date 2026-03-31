@@ -1,22 +1,25 @@
 package com.todocine_webflux.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "usuario_movie")
+@CompoundIndex(def = "{'usuarioId': 1, 'movieId': 1}", unique = true) // Evita duplicados
 public class UsuarioMovie {
 
     @Id
     private String id;
 
+    @Indexed // Índice simple para buscar rápido todas las películas de un usuario
     private String usuarioId;
 
+    @Indexed // Índice simple para buscar rápido todos los usuarios de una película
     private String movieId;
 
     private String favoritos;
-
     private String vista;
-
     private Double voto;
 
     public UsuarioMovie() {

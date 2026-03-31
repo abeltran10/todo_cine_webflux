@@ -3,11 +3,8 @@ package com.todocine_webflux.service.impl;
 import com.todocine_webflux.dao.CategoriaDAO;
 import com.todocine_webflux.dao.GanadorRepo;
 import com.todocine_webflux.dao.MovieDAO;
-import com.todocine_webflux.dao.PremioDAO;
 import com.todocine_webflux.dto.response.GanadorDTO;
-import com.todocine_webflux.entities.Categoria;
 import com.todocine_webflux.entities.Movie;
-import com.todocine_webflux.entities.Premio;
 import com.todocine_webflux.service.PremioService;
 import com.todocine_webflux.utils.Paginator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +36,7 @@ public class PremioServiceImpl implements PremioService {
         Mono<List<GanadorDTO>> resultadosMono = ganadorRepo.findByPremioIdAndAnyo(premioId, anyo, offset, size)
                 .flatMap(ganador -> {
                     Mono<Premio> premioMono = premioDAO.findById(ganador.getPremioId()).defaultIfEmpty(new Premio());
-                    Mono<Categoria> categoriaMono = categoriaDAO.findById(ganador.getCategoriaId()).defaultIfEmpty(new Categoria());
+                    Mono<Categoria> categoriaMono = categoriaDAO.findById(ganador.getCategoria()).defaultIfEmpty(new Categoria());
                     Mono<Movie> movieMono = movieDAO.findById(ganador.getMovieId()).defaultIfEmpty(new Movie());
 
                     return Mono.zip(premioMono, categoriaMono, movieMono)

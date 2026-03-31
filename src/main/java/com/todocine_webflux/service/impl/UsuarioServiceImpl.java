@@ -1,6 +1,7 @@
 package com.todocine_webflux.service.impl;
 
 import com.todocine_webflux.dao.UsuarioDAO;
+import com.todocine_webflux.dto.request.UsuarioReqDTO;
 import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 import com.todocine_webflux.exceptions.BadRequestException;
@@ -43,7 +44,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
 
 
     @Override
-    public Mono<UsuarioDTO> insertUsuario(UsuarioDTO dto) {
+    public Mono<UsuarioDTO> insertUsuario(UsuarioReqDTO dto) {
         return usuarioDAO.findByUsername(dto.getUsername())
                 .hasElement()
                 .flatMap(exists -> {
@@ -60,7 +61,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
 
 
     @Override
-    public Mono<UsuarioDTO> updateUsuario(String id, UsuarioDTO dto) {
+    public Mono<UsuarioDTO> updateUsuario(String id, UsuarioReqDTO dto) {
         log.info("updateUsuario -> {}", id);
 
         return checkCurrentUser(id)

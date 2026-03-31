@@ -1,5 +1,6 @@
 package com.todocine_webflux.controllers;
 
+import com.todocine_webflux.dto.request.GanadorReqDTO;
 import com.todocine_webflux.dto.response.GanadorDTO;
 import com.todocine_webflux.utils.Paginator;
 import jakarta.validation.Valid;

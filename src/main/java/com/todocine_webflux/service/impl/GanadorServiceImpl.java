@@ -57,8 +57,8 @@ public class GanadorServiceImpl implements GanadorService {
 
                     paginator.setResults(movies);
                     paginator.setPage(page);
-                    paginator.setTotalPages(totalElements.intValue());
-                    paginator.setTotalResults(size);
+                    paginator.setTotalPages((int) Math.ceil((double) totalElements / size));
+                    paginator.setTotalResults(totalElements.intValue());
                     // 2. Construimos nuestro objeto Paginator personalizado
                     return paginator;
 

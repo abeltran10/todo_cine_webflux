@@ -52,6 +52,8 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
         int limit  = 21;
         int offset = (page - 1) * limit;
 
+        Paginator<MovieDetailDTO> paginator = new Paginator<>();
+
         return checkCurrentUser(userId)
                 .flatMapMany(ok -> usuarioMovieRepo
                         .findWithFilters(userId, filters, orderBy, offset, limit))
@@ -59,16 +61,15 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
                 .collectList()
                 .flatMap(list -> {
                     if (list.isEmpty()) {
-                        return Mono.error(new NotFoudException(FAVORITOS_NOTFOUND));
+                        return Mono.just(paginator);
                     }
                     return usuarioMovieRepo.countWithFilters(userId, filters)
                             .map(total -> {
-                                Paginator<MovieDetailDTO> p = new Paginator<>();
-                                p.setResults(list);
-                                p.setTotalResults(total.intValue());
-                                p.setTotalPages((int) (total / (limit + 1)) + 1);
-                                p.setPage(page);
-                                return p;
+                                paginator.setResults(list);
+                                paginator.setTotalResults(total.intValue());
+                                paginator.setTotalPages((int) Math.ceil((double) total.intValue()/ limit));
+                                paginator.setPage(page);
+                                return paginator;
                             });
                 });
     }

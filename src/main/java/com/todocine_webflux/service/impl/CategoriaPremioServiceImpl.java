@@ -16,7 +16,7 @@ public class CategoriaPremioServiceImpl implements CategoriaPremioService {
     private CategoriaPremioDAO categoriaPremioDAO;
 
     @Override
-    public Flux<CategoriaDTO> getCategorias(String premioId) {
+    public Flux<CategoriaDTO> getCategorias(Long premioId) {
         return categoriaPremioDAO.findByPremioId(premioId)
                 .switchIfEmpty(Mono.empty())
 

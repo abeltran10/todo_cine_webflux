@@ -2,11 +2,11 @@ package com.todocine_webflux.entities;
 
 public class Premio {
 
-    private String premioId;
+    private Long premioId;
 
     private String titulo;
 
-    private String categoriaId;
+    private Long categoriaId;
 
     private String categoria;
 
@@ -15,11 +15,11 @@ public class Premio {
     public Premio() {
     }
 
-   public String getPremioId() {
+   public Long getPremioId() {
         return premioId;
     }
 
-    public void setPremioId(String premioId) {
+    public void setPremioId(Long premioId) {
         this.premioId = premioId;
     }
 
@@ -31,11 +31,11 @@ public class Premio {
         this.titulo = titulo;
     }
 
-    public String getCategoriaId() {
+    public Long getCategoriaId() {
         return categoriaId;
     }
 
-    public void setCategoriaId(String categoriaId) {
+    public void setCategoriaId(Long categoriaId) {
         this.categoriaId = categoriaId;
     }
 

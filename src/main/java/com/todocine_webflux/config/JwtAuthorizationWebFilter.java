@@ -47,7 +47,7 @@ public class JwtAuthorizationWebFilter implements WebFilter {
             Usuario usuario = UserMapper.toEntity(dto);
 
             Authentication auth = new UsernamePasswordAuthenticationToken(
-                    usuario, usuario.getPassword(), List.of());
+                    usuario, usuario.getPassword(), usuario.getAuthorities());
 
             return chain.filter(exchange)
                     .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth));

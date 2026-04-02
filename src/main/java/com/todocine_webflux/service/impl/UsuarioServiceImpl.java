@@ -54,6 +54,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
                     Usuario usuario = new Usuario(
                             dto.getUsername(),
                             passwordEncoder().encode(dto.getPassword()));
+                    usuario.setRol("USUARIO");
                     return usuarioDAO.save(usuario);
                 })
                 .map(UserMapper::toDTO);
@@ -61,11 +62,11 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
 
 
     @Override
-    public Mono<UsuarioDTO> updateUsuario(String id, UsuarioReqDTO dto) {
+    public Mono<UsuarioDTO> updateUsuario(Long id, UsuarioReqDTO dto) {
         log.info("updateUsuario -> {}", id);
 
         return checkCurrentUser(id)
-                .flatMap(usuarioDAO::findById)
+                .flatMap(usuarioDAO::findUsuarioById)
                 .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))
                 .flatMap(u -> {
                     u.setPassword(passwordEncoder().encode(dto.getPassword()));
@@ -75,9 +76,9 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
     }
 
     @Override
-    public Mono<UsuarioDTO> getUsuarioById(String id) {
+    public Mono<UsuarioDTO> getUsuarioById(Long id) {
         return checkCurrentUser(id)
-                .flatMap(usuarioDAO::findById)
+                .flatMap(usuarioDAO::findUsuarioById)
                 .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))
                 .map(UserMapper::toDTO);
     }

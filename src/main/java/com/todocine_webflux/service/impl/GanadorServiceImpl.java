@@ -40,7 +40,7 @@ public class GanadorServiceImpl implements GanadorService {
     private CategoriaPremioDAO categoriaPremioDAO;
 
     @Override
-    public Mono<Paginator<GanadorDTO>> getGanadoresByPremioIdAnyo(String premioId, Integer anyo, Integer page) {
+    public Mono<Paginator<GanadorDTO>> getGanadoresByPremioIdAnyo(Long premioId, Integer anyo, Integer page) {
         int size = 21;
         long skip = (long) page * 21;
         Paginator<GanadorDTO> paginator = new Paginator<>();
@@ -69,11 +69,11 @@ public class GanadorServiceImpl implements GanadorService {
     @Override
 // Nota: Las transacciones en MongoDB requieren un setup específico (Replica Set)
     public Mono<GanadorDTO> insertGanador(GanadorReqDTO req) {
-        String movieId = String.valueOf(req.getMovieId());
-        String premioId = String.valueOf(req.getPremioId());
+        Long movieId = req.getMovieId();
+        Long premioId = req.getPremioId();
 
         // 1. Verificamos si la película existe en nuestra DB local
-        return movieDAO.findById(movieId)
+        return movieDAO.findMovieById(movieId)
                 // 2. Si no existe localmente, la buscamos en TMDB y la guardamos
                 .switchIfEmpty(
                         tmdbService.getMovieById(String.valueOf(req.getMovieId()))
@@ -102,7 +102,7 @@ public class GanadorServiceImpl implements GanadorService {
                                 nuevoPremio.setPremioId(premioId);
                                 nuevoPremio.setTitulo(catPremio.getTitulo()); // El título (ej: Oscar)
                                 nuevoPremio.setAnyo(req.getAnyo());
-                                nuevoPremio.setCategoriaId(String.valueOf(req.getCategoriaId()));
+                                nuevoPremio.setCategoriaId(req.getCategoriaId());
                                 // Buscamos el nombre de la categoría dentro de la lista de catPremio
                                 String nombreCat = catPremio.getCategorias().stream()
                                         .filter(c -> c.getId().equals(String.valueOf(req.getCategoriaId())))

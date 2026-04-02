@@ -12,8 +12,7 @@ import java.util.Objects;
 @Document(collection = "usuarios")
 public class Usuario implements UserDetails {
 
-    @Id
-    private String id;
+    private Long id;
 
     private String username;
     private String password;
@@ -22,6 +21,8 @@ public class Usuario implements UserDetails {
     private Boolean credentialsNonExpired = true;
     private Boolean enabled = true;
 
+    private String rol;
+
     public Usuario() {}
 
     public Usuario(String username, String password) {
@@ -29,7 +30,7 @@ public class Usuario implements UserDetails {
         this.password = password;
     }
 
-    public Usuario(String id, String username, String password, Boolean accountNonExpired,
+    public Usuario(Long id, String username, String password, Boolean accountNonExpired,
                    Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled) {
         this.id = id;
         this.username = username;
@@ -40,11 +41,11 @@ public class Usuario implements UserDetails {
         this.enabled = enabled;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -118,9 +119,17 @@ public class Usuario implements UserDetails {
         return Boolean.TRUE.equals(enabled);
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "USER");
+        return List.of(() -> this.rol);
     }
 
     @Override

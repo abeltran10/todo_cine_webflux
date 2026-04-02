@@ -10,11 +10,11 @@ public class UsuarioMovieDTO {
 
     @JsonProperty("usuarioId")
     @NotNull
-    private String usuarioId;
+    private Long usuarioId;
 
     @JsonProperty("movieId")
     @NotBlank
-    private String movieId;
+    private Long movieId;
 
     @JsonProperty("favoritos")
     @NotNull
@@ -30,24 +30,24 @@ public class UsuarioMovieDTO {
     public UsuarioMovieDTO() {
     }
 
-    public UsuarioMovieDTO(String usuarioId, String movieId) {
+    public UsuarioMovieDTO(Long usuarioId, Long movieId) {
         this.usuarioId = usuarioId;
         this.movieId = movieId;
     }
 
-    public String getUsuarioId() {
+    public Long getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(String usuarioId) {
+    public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
     }
 
-    public String getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
 

@@ -5,5 +5,5 @@ import reactor.core.publisher.Flux;
 
 public interface CategoriaPremioService {
 
-    Flux<CategoriaDTO> getCategorias(String premioId);
+    Flux<CategoriaDTO> getCategorias(Long premioId);
 }

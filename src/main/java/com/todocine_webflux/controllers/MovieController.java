@@ -37,7 +37,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<MovieDetailDTO>> getMovieDetailById(@NotBlank @PathVariable("id") String id) {
+    public Mono<ResponseEntity<MovieDetailDTO>> getMovieDetailById(@NotBlank @PathVariable("id") Long id) {
         return movieService.getMovieDetailById(id)
                 .map(ResponseEntity::ok);
     }

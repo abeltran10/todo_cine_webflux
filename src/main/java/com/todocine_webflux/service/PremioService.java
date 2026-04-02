@@ -10,5 +10,5 @@ public interface PremioService {
 
     Flux<PremioDTO> getPremios();
 
-    Mono<PremioDTO> getPremioById(String premioId);
+    Mono<PremioDTO> getPremioById(Long premioId);
 }

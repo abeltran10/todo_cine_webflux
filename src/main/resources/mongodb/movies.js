@@ -1039,9 +1039,9 @@ ganadores.forEach(([anyo, movieId, categoriaId, premioId]) => {
     }
 
     premiosPorMovie[movieId].push({
-        premioId: premioId,
+        premioId: parseInt(premioId),
         titulo: premiosMap[premioId],
-        categoriaId: categoriaId,
+        categoriaId: parseInt(categoriaId),
         categoria: categoriasMap[categoriaId],
         anyo: parseInt(anyo)
     });

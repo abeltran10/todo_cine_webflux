@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface UsuarioMovieRepo {
 
-    Flux<UsuarioMovie> findWithFilters(String userId, Map<String, String> filters, String orderBy, int offset, int limit);
+    Flux<UsuarioMovie> findWithFilters(Long userId, Map<String, String> filters, String orderBy, int offset, int limit);
 
-    Mono<Long> countWithFilters(String userId, Map<String, String> filters);
+    Mono<Long> countWithFilters(Long userId, Map<String, String> filters);
 }

@@ -29,7 +29,7 @@ public class PremioController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<PremioDTO>> getPremioById(@NotNull @PathVariable("id") String id) {
+    public Mono<ResponseEntity<PremioDTO>> getPremioById(@NotNull @PathVariable("id") Long id) {
         return premioService.getPremioById(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
@@ -37,7 +37,7 @@ public class PremioController {
 
     @GetMapping("/{id}/categorias")
     @PreAuthorize("hasRole('ADMIN')")
-    public Flux<CategoriaDTO> getCategorias(@NotNull @PathVariable("id") String id) {
+    public Flux<CategoriaDTO> getCategorias(@NotNull @PathVariable("id") Long id) {
         return categoriaPremioService.getCategorias(id);
     }
 }

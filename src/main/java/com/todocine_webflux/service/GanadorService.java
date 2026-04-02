@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import java.util.Optional;
 
 public interface GanadorService {
-    Mono<Paginator<GanadorDTO>> getGanadoresByPremioIdAnyo(String premioId, Integer anyo, Integer page);
+    Mono<Paginator<GanadorDTO>> getGanadoresByPremioIdAnyo(Long premioId, Integer anyo, Integer page);
 
     Mono<GanadorDTO> insertGanador(GanadorReqDTO req);
 }

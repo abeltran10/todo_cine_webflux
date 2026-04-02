@@ -22,7 +22,7 @@ public class GanadorController {
 
     @GetMapping
     public Mono<ResponseEntity<Paginator<GanadorDTO>>> getGanadoresByPremioIdAnyo(
-            @NotNull @RequestParam("premioId") String id,
+            @NotNull @RequestParam("premioId") Long id,
             @NotNull @RequestParam("anyo") Integer anyo,
             @NotNull @RequestParam("pagina") Integer page) {
 

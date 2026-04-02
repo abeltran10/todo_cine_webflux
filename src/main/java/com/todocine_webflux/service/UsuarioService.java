@@ -8,7 +8,7 @@ public interface UsuarioService {
 
     Mono<UsuarioDTO> insertUsuario(UsuarioReqDTO usuarioDTO);
 
-    Mono<UsuarioDTO> updateUsuario(String id, UsuarioReqDTO usuarioDTO);
+    Mono<UsuarioDTO> updateUsuario(Long id, UsuarioReqDTO usuarioDTO);
 
-    Mono<UsuarioDTO> getUsuarioById(String id);
+    Mono<UsuarioDTO> getUsuarioById(Long id);
 }

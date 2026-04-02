@@ -16,7 +16,7 @@ public class MovieMapper {
     public static Movie toEntity(MovieDTO movieDTO) {
         Movie movie = new Movie();
 
-        movie.setId(String.valueOf(movieDTO.getId()));
+        movie.setId(movieDTO.getId());
         movie.setOriginalTitle(movieDTO.getOriginalTitle());
         movie.setTitle(movieDTO.getTitle());
         movie.setPosterPath(movieDTO.getPosterPath());
@@ -35,7 +35,7 @@ public class MovieMapper {
     public static MovieDTO toDTO(Movie movie) {
         MovieDTO movieDTO = new MovieDTO();
 
-        movieDTO.setId(Long.parseLong(movie.getId()));
+        movieDTO.setId(movie.getId());
         movieDTO.setOriginalTitle(movie.getOriginalTitle());
         movieDTO.setTitle(movie.getTitle());
         movieDTO.setPosterPath(movie.getPosterPath());

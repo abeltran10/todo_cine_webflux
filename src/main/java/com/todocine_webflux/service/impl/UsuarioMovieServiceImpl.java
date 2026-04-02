@@ -44,7 +44,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
 
     @Override
-    public Mono<Paginator<MovieDetailDTO>> getUsuarioMovies(String userId,
+    public Mono<Paginator<MovieDetailDTO>> getUsuarioMovies(Long userId,
                                                             Map<String, String> filters,
                                                             String orderBy,
                                                             Integer page) {
@@ -75,12 +75,12 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
 
     @Override
-    public Mono<MovieDetailDTO> updateUsuarioMovie(String userId,
+    public Mono<MovieDetailDTO> updateUsuarioMovie(Long userId,
                                                    String movieId,
                                                    UsuarioMovieDTO dto) {
 
         return checkCurrentUser(userId)
-                .flatMap(ok -> tmdbService.getMovieById(dto.getMovieId()))
+                .flatMap(ok -> tmdbService.getMovieById(String.valueOf(dto.getMovieId())))
                 .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
                 .flatMap(movieMap -> upsertMovie(movieMap, movieId))
                 .flatMap(movie -> upsertUsuarioMovie(userId, movie, dto))
@@ -89,7 +89,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
 
     private Mono<MovieDetailDTO> toMovieDetail(UsuarioMovie um) {
-        return movieDAO.findById(um.getMovieId())
+        return movieDAO.findMovieById(um.getMovieId())
                 .switchIfEmpty(Mono.empty())
                 .map(movie ->
                      new MovieDetailDTO(
@@ -112,7 +112,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
                 }));
     }
 
-    private Mono<Movie> upsertUsuarioMovie(String userId,
+    private Mono<Movie> upsertUsuarioMovie(Long userId,
                                                                  Movie movie,
                                                                  UsuarioMovieDTO dto) {
 

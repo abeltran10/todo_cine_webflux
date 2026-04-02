@@ -38,18 +38,18 @@ public class MovieServiceImpl extends BaseServiceImpl implements MovieService {
     private UsuarioMovieDAO usuarioMovieDAO;
 
     @Override
-    public Mono<MovieDetailDTO> getMovieDetailById(String id) {
+    public Mono<MovieDetailDTO> getMovieDetailById(Long id) {
         // 1. Ejecutamos en paralelo: Pedir la peli a TMDB y obtener el Usuario del contexto
-        return Mono.zip(tmdbService.getMovieById(id), getCurrentUserId())
+        return Mono.zip(tmdbService.getMovieById(String.valueOf(id)), getCurrentUserId())
                 .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
                 .flatMap(tuple -> {
                     Map<String, Object> movieMap = tuple.getT1(); // Resultado de TMDB
-                    String userId = tuple.getT2();               // Resultado de getCurrentUserId()
+                    Long userId = tuple.getT2();               // Resultado de getCurrentUserId()
 
                     MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 
                     // 2. Buscamos nuestros datos locales (Stats y Premios)
-                    return movieDAO.findById(id)
+                    return movieDAO.findMovieById(id)
                             .map(movie -> {
                                 movieDTO.setVotosMediaTC(movie.getVotosMediaTC());
                                 movieDTO.setTotalVotosTC(movie.getTotalVotosTC());

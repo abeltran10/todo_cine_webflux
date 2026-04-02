@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface MovieService {
 
-    Mono<MovieDetailDTO> getMovieDetailById(String id);
+    Mono<MovieDetailDTO> getMovieDetailById(Long id);
 
     Mono<Paginator<MovieDTO>> getMovies(Map<String, String> filters, Integer pagina);
 }

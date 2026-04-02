@@ -10,7 +10,7 @@ import static com.todocine_webflux.config.Constants.USER_FORBIDDEN;
 
 public class BaseServiceImpl {
 
-    public Mono<String> checkCurrentUser(String requestedId) {
+    public Mono<Long> checkCurrentUser(Long requestedId) {
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
                 .map(auth -> ((Usuario) auth.getPrincipal()).getId())
@@ -22,7 +22,7 @@ public class BaseServiceImpl {
         return checkCurrentUser(usuario.getId()).thenReturn(usuario);
     }
 
-    public Mono<String> getCurrentUserId() {
+    public Mono<Long> getCurrentUserId() {
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
                 .map(auth -> ((Usuario) auth.getPrincipal()).getId());

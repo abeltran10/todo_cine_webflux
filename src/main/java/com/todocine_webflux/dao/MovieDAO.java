@@ -13,6 +13,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
+    Mono<Movie> findMovieById(Long id);
+
+
     @Aggregation(pipeline = {
             "{ '$unwind': '$premios' }",
             "{ '$group': { " +
@@ -49,7 +52,7 @@ public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
                     "'_id': 0 " +
                     "} }"
     })
-    Mono<PremioDTO> findPremioById(String premioId);
+    Mono<PremioDTO> findPremioById(Long premioId);
 
     @Aggregation(pipeline = {
             // 1. Filtrado inicial por índice (muy rápido)
@@ -81,7 +84,7 @@ public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
             "{ '$skip': ?2 }",
             "{ '$limit': ?3 }"
     })
-    Flux<GanadorDTO> findGanadoresByPremioAndAnyo(String premioId, Integer anyo, long skip, int limit);
+    Flux<GanadorDTO> findGanadoresByPremioAndAnyo(Long premioId, Integer anyo, long skip, int limit);
 
     // El conteo también debe hacerse sobre los premios "unwinded" para ser exacto
     @Aggregation(pipeline = {
@@ -90,5 +93,5 @@ public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
             "{ '$match': { 'premios.premioId': ?0, 'premios.anio': ?1 } }",
             "{ '$count': 'total' }"
     })
-    Mono<Long> countGanadoresByPremioAndAnyo(String premioId, Integer anyo);
+    Mono<Long> countGanadoresByPremioAndAnyo(Long premioId, Integer anyo);
 }

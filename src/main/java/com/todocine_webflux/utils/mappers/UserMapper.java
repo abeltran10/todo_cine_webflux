@@ -15,6 +15,7 @@ public class UserMapper {
         usuario.setAccountNonLocked(usuarioDTO.getAccountNonLocked());
         usuario.setCredentialsNonExpired(usuarioDTO.getCredentialsNonExpired());
         usuario.setEnabled(usuarioDTO.getEnabled());
+        usuario.setRol(usuarioDTO.getRol());
 
         return usuario;
     }
@@ -24,7 +25,7 @@ public class UserMapper {
 
         usuarioDTO.setId(usuario.getId());
         usuarioDTO.setUsername(usuario.getUsername());
-        usuarioDTO.setPassword(usuario.getPassword());
+        usuarioDTO.setRol(usuario.getRol());
 
         return usuarioDTO;
     }

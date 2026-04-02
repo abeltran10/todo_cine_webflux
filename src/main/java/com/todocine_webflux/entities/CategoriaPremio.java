@@ -12,7 +12,7 @@ public class CategoriaPremio {
     @Id
     private String id;
 
-    private String premioId;
+    private Long premioId;
 
     private String titulo;
 
@@ -33,11 +33,11 @@ public class CategoriaPremio {
         this.id = id;
     }
 
-    public String getPremioId() {
+    public Long getPremioId() {
         return premioId;
     }
 
-    public void setPremioId(String premioId) {
+    public void setPremioId(Long premioId) {
         this.premioId = premioId;
     }
 

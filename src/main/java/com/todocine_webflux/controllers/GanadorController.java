@@ -2,6 +2,7 @@ package com.todocine_webflux.controllers;
 
 import com.todocine_webflux.dto.request.GanadorReqDTO;
 import com.todocine_webflux.dto.response.GanadorDTO;
+import com.todocine_webflux.service.GanadorService;
 import com.todocine_webflux.utils.Paginator;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ public class GanadorController {
 
     @GetMapping
     public Mono<ResponseEntity<Paginator<GanadorDTO>>> getGanadoresByPremioIdAnyo(
-            @NotNull @RequestParam("premioId") Long id,
+            @NotNull @RequestParam("premioId") String id,
             @NotNull @RequestParam("anyo") Integer anyo,
             @NotNull @RequestParam("pagina") Integer page) {
 

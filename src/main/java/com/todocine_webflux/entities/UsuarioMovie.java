@@ -15,7 +15,6 @@ public class UsuarioMovie {
     @Indexed // Índice simple para buscar rápido todas las películas de un usuario
     private String usuarioId;
 
-    @Indexed // Índice simple para buscar rápido todos los usuarios de una película
     private String movieId;
 
     private String favoritos;

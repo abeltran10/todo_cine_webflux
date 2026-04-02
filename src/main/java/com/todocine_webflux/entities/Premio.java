@@ -6,6 +6,8 @@ public class Premio {
 
     private String titulo;
 
+    private String categoriaId;
+
     private String categoria;
 
     private Integer anyo;
@@ -27,6 +29,14 @@ public class Premio {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(String categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public String getCategoria() {

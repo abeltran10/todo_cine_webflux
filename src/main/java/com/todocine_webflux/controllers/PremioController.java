@@ -2,6 +2,7 @@ package com.todocine_webflux.controllers;
 
 import com.todocine_webflux.dto.response.CategoriaDTO;
 import com.todocine_webflux.dto.response.PremioDTO;
+import com.todocine_webflux.service.CategoriaPremioService;
 import com.todocine_webflux.service.PremioService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

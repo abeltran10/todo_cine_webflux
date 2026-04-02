@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public class CategoriaDTO {
 
     @NotNull
-    private String id;
+    private Long id;
 
 
     @JsonProperty("nombre")
@@ -19,17 +19,17 @@ public class CategoriaDTO {
     public CategoriaDTO() {
     }
 
-    public CategoriaDTO(String id, String nombre) {
+    public CategoriaDTO(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
 
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

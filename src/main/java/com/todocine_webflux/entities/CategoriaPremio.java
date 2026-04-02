@@ -12,7 +12,9 @@ public class CategoriaPremio {
     @Id
     private String id;
 
-    private String premio;
+    private String premioId;
+
+    private String titulo;
 
     private List<Categoria> categorias = new ArrayList<>();
 
@@ -31,12 +33,20 @@ public class CategoriaPremio {
         this.id = id;
     }
 
-    public String getPremio() {
-        return premio;
+    public String getPremioId() {
+        return premioId;
     }
 
-    public void setPremio(String premio) {
-        this.premio = premio;
+    public void setPremioId(String premioId) {
+        this.premioId = premioId;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public List<Categoria> getCategorias() {

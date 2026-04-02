@@ -12,7 +12,7 @@ public class MovieDetailDTO {
 
     @JsonProperty("id")
     @NotNull
-    private String id;
+    private Long id;
 
     @JsonProperty("original_title")
     @NotBlank
@@ -96,11 +96,11 @@ public class MovieDetailDTO {
         this.vista = vista;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

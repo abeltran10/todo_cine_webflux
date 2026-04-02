@@ -23,6 +23,10 @@ public class Paginator<T> {
     private Integer totalResults;
 
     public Paginator() {
+        this.page = 1;
+        this.results = new ArrayList<>();
+        this.totalPages = 1;
+        this.totalResults = 0;
     }
 
     public Paginator(Integer page, List<T> results, Integer totalPages, Integer totalResults) {

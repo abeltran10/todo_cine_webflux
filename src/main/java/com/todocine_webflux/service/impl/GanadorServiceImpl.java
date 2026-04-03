@@ -100,7 +100,12 @@ public class GanadorServiceImpl implements GanadorService {
                                 String nombreCat = catPremio.getCategorias().stream()
                                         .filter(c -> c.getId().equals(req.getCategoriaId()))
                                         .map(Categoria::getNombre)
-                                        .findFirst().get();
+                                        .findFirst()
+                                        .orElse(null);
+
+                                if (nombreCat == null)
+                                    return Mono.error(new NotFoudException(PREMIO_NOTFOUND));
+
                                 nuevoPremio.setCategoria(nombreCat);
 
                                 if (movie.getPremios() == null) movie.setPremios(new ArrayList<>());

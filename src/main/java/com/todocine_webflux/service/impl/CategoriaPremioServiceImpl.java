@@ -19,11 +19,7 @@ public class CategoriaPremioServiceImpl implements CategoriaPremioService {
     public Flux<CategoriaDTO> getCategorias(Long premioId) {
         return categoriaPremioDAO.findByPremioId(premioId)
                 .switchIfEmpty(Mono.empty())
-
-                // 2. Convertimos la List<Categoria> interna en un flujo de elementos individuales
                 .flatMapMany(doc -> Flux.fromIterable(doc.getCategorias()))
-
-                // 3. Mapeamos cada objeto Categoria al DTO de salida
                 .map(CategoriaMapper::toDTO);
     }
 }

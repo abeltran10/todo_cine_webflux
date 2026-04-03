@@ -45,10 +45,9 @@ public class GanadorServiceImpl implements GanadorService {
         long skip = (long) page * 21;
         Paginator<GanadorDTO> paginator = new Paginator<>();
 
-        // 1. Ejecutamos el conteo y la búsqueda en paralelo con Mono.zip
         return Mono.zip(
                         movieDAO.findGanadoresByPremioAndAnyo(premioId, anyo, skip, size)
-                                .collectList(),          // Agrupamos en una lista para el paginador
+                                .collectList(),
                         movieDAO.countGanadoresByPremioAndAnyo(premioId, anyo)
                 )
                 .map(tuple -> {
@@ -67,14 +66,11 @@ public class GanadorServiceImpl implements GanadorService {
     }
 
     @Override
-// Nota: Las transacciones en MongoDB requieren un setup específico (Replica Set)
     public Mono<GanadorDTO> insertGanador(GanadorReqDTO req) {
         Long movieId = req.getMovieId();
         Long premioId = req.getPremioId();
 
-        // 1. Verificamos si la película existe en nuestra DB local
         return movieDAO.findMovieById(movieId)
-                // 2. Si no existe localmente, la buscamos en TMDB y la guardamos
                 .switchIfEmpty(
                         tmdbService.getMovieById(String.valueOf(req.getMovieId()))
                                 .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
@@ -83,8 +79,7 @@ public class GanadorServiceImpl implements GanadorService {
                                 .flatMap(movieDAO::save)
                 )
                 .flatMap(movie -> {
-                    // 3. Verificamos si ya tiene ese premio (Evitar duplicados / ConflictException)
-                    boolean yaEsGanador = movie.getPremios() != null && movie.getPremios().stream()
+                        boolean yaEsGanador = movie.getPremios() != null && movie.getPremios().stream()
                             .anyMatch(p -> p.getPremioId().equals(premioId)
                                     && p.getAnyo().equals(req.getAnyo())
                                     && p.getCategoriaId().equals(req.getCategoriaId()));
@@ -93,24 +88,21 @@ public class GanadorServiceImpl implements GanadorService {
                         return Mono.error(new ConflictException(GANADOR_EXISTS));
                     }
 
-                    // 4. Validamos que el Premio/Categoría existan en la colección maestra
-                    return categoriaPremioDAO.findByPremioId(premioId) // Ajustado a tu DAO anterior
+                    return categoriaPremioDAO.findByPremioId(premioId)
                             .switchIfEmpty(Mono.error(new NotFoudException(PREMIO_NOTFOUND)))
                             .flatMap(catPremio -> {
-                                // 5. Creamos el nuevo objeto de premio ganado
                                 Premio nuevoPremio = new Premio();
                                 nuevoPremio.setPremioId(premioId);
-                                nuevoPremio.setTitulo(catPremio.getTitulo()); // El título (ej: Oscar)
+                                nuevoPremio.setTitulo(catPremio.getTitulo());
                                 nuevoPremio.setAnyo(req.getAnyo());
                                 nuevoPremio.setCategoriaId(req.getCategoriaId());
-                                // Buscamos el nombre de la categoría dentro de la lista de catPremio
+
                                 String nombreCat = catPremio.getCategorias().stream()
                                         .filter(c -> c.getId().equals(String.valueOf(req.getCategoriaId())))
                                         .map(Categoria::getNombre)
                                         .findFirst().get();
                                 nuevoPremio.setCategoria(nombreCat);
 
-                                // 6. Añadimos el premio a la película y guardamos
                                 if (movie.getPremios() == null) movie.setPremios(new ArrayList<>());
                                 movie.getPremios().add(nuevoPremio);
 

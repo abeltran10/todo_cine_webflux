@@ -39,26 +39,23 @@ public class MovieServiceImpl extends BaseServiceImpl implements MovieService {
 
     @Override
     public Mono<MovieDetailDTO> getMovieDetailById(Long id) {
-        // 1. Ejecutamos en paralelo: Pedir la peli a TMDB y obtener el Usuario del contexto
+
         return Mono.zip(tmdbService.getMovieById(String.valueOf(id)), getCurrentUserId())
                 .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
                 .flatMap(tuple -> {
-                    Map<String, Object> movieMap = tuple.getT1(); // Resultado de TMDB
-                    Long userId = tuple.getT2();               // Resultado de getCurrentUserId()
+                    Map<String, Object> movieMap = tuple.getT1();
+                    Long userId = tuple.getT2();
 
                     MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 
-                    // 2. Buscamos nuestros datos locales (Stats y Premios)
                     return movieDAO.findMovieById(id)
                             .map(movie -> {
                                 movieDTO.setVotosMediaTC(movie.getVotosMediaTC());
                                 movieDTO.setTotalVotosTC(movie.getTotalVotosTC());
-                                // Aquí ya tendrías acceso a movie.getPremios()
+
                                 return movieDTO;
                             })
-                            .defaultIfEmpty(movieDTO) // Si no existe en nuestra DB local
-
-                            // 3. Buscamos la interacción de ese usuario concreto con esa película
+                            .defaultIfEmpty(movieDTO)
                             .flatMap(dto -> usuarioMovieDAO.findByUsuarioIdAndMovieId(userId, id)
                                     .map(um -> new MovieDetailDTO(
                                             dto,
@@ -66,7 +63,6 @@ public class MovieServiceImpl extends BaseServiceImpl implements MovieService {
                                             um.getVoto(),
                                             "S".equals(um.getVista())
                                     ))
-                                    // Si no hay interacción previa, valores por defecto
                                     .switchIfEmpty(Mono.just(new MovieDetailDTO(dto, false, null, false)))
                             );
                 })

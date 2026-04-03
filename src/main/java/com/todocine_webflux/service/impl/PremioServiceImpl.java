@@ -29,7 +29,6 @@ public class PremioServiceImpl implements PremioService {
     @Override
     public Mono<PremioDTO> getPremioById(Long premioId) {
         return movieDAO.findPremioById(premioId)
-                // Si la agregación no devuelve nada (Mono vacío), lanzamos excepción
                 .switchIfEmpty(Mono.error(new NotFoudException(PREMIO_NOTFOUND)));
     }
 

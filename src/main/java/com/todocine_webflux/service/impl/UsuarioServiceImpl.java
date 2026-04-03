@@ -5,6 +5,7 @@ import com.todocine_webflux.dto.request.UsuarioReqDTO;
 import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 import com.todocine_webflux.exceptions.BadRequestException;
+import com.todocine_webflux.exceptions.ConflictException;
 import com.todocine_webflux.exceptions.NotFoudException;
 import com.todocine_webflux.service.UsuarioService;
 import com.todocine_webflux.utils.mappers.UserMapper;
@@ -49,7 +50,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
                 .hasElement()
                 .flatMap(exists -> {
                     if (exists) {
-                        return Mono.error(new BadRequestException(USER_EXISTS));
+                        return Mono.error(new ConflictException(USER_EXISTS));
                     }
                     Usuario usuario = new Usuario(
                             dto.getUsername(),

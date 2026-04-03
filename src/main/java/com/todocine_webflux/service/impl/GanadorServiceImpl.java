@@ -97,8 +97,6 @@ public class GanadorServiceImpl implements GanadorService {
                                 nuevoPremio.setAnyo(req.getAnyo());
                                 nuevoPremio.setCategoriaId(req.getCategoriaId());
 
-                                List<Categoria> categorias = catPremio.getCategorias();
-
                                 String nombreCat = catPremio.getCategorias().stream()
                                         .filter(c -> c.getId().equals(req.getCategoriaId()))
                                         .map(Categoria::getNombre)

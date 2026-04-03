@@ -77,7 +77,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
     @Override
     public Mono<MovieDetailDTO> updateUsuarioMovie(Long userId,
-                                                   String movieId,
+                                                   Long movieId,
                                                    UsuarioMovieDTO dto) {
 
         return checkCurrentUser(userId)
@@ -103,10 +103,10 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
     }
     
-    private Mono<Movie> upsertMovie(Map<String, Object> movieMap, String movieId) {
+    private Mono<Movie> upsertMovie(Map<String, Object> movieMap, Long movieId) {
         MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 
-        return movieDAO.findById(movieId)
+        return movieDAO.findMovieById(movieId)
                 .switchIfEmpty(Mono.defer(() -> {
                     Movie newMovie = MovieMapper.toEntity(movieDTO);
                     return movieDAO.save(newMovie);

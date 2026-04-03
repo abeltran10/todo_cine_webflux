@@ -27,8 +27,7 @@ public class GanadorController {
             @NotNull @RequestParam("pagina") Integer page) {
 
         return ganadorService.getGanadoresByPremioIdAnyo(id, anyo, page)
-                .map(paginador -> ResponseEntity.ok(paginador))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+                .map(paginador -> ResponseEntity.ok(paginador));
     }
 
     @PostMapping

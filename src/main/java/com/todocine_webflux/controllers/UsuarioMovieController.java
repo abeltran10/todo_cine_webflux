@@ -20,7 +20,7 @@ public class UsuarioMovieController {
 
     @PutMapping("/{movieId}")
     public Mono<ResponseEntity<MovieDetailDTO>> updateUsuarioMovie(@NotBlank @PathVariable("usuarioId") Long userId,
-                                                                   @NotBlank @PathVariable("movieId") String movieId,
+                                                                   @NotBlank @PathVariable("movieId") Long movieId,
                                                                    @Valid @RequestBody UsuarioMovieDTO usuarioMovieDTO) {
         return usuarioMovieService.updateUsuarioMovie(userId, movieId, usuarioMovieDTO)
                 .map(ResponseEntity::ok);

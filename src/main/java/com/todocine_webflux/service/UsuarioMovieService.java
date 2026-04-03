@@ -11,5 +11,5 @@ public interface UsuarioMovieService {
 
     Mono<Paginator<MovieDetailDTO>> getUsuarioMovies(Long userId, Map<String, String> filters, String orderBy, Integer page);
 
-    Mono<MovieDetailDTO> updateUsuarioMovie(Long userId, String movieId, UsuarioMovieDTO dto);
+    Mono<MovieDetailDTO> updateUsuarioMovie(Long userId, Long movieId, UsuarioMovieDTO dto);
 }

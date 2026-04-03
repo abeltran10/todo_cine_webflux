@@ -12,7 +12,7 @@ public class PremioDTO {
 
     @JsonProperty("id")
     @NotNull
-    private String id;
+    private Long id;
 
     @JsonProperty("titulo")
     @NotBlank
@@ -21,20 +21,29 @@ public class PremioDTO {
     @JsonProperty("anyos")
     private List<Integer> anyos;
 
-    public PremioDTO(String id) {
+    public PremioDTO() {
+    }
+
+    public PremioDTO(Long id) {
         this.id = id;
     }
 
-    public PremioDTO(String id, String titulo) {
+    public PremioDTO(Long id, String titulo) {
         this.id = id;
         this.titulo = titulo;
     }
 
-    public String getId() {
+    public PremioDTO(Long id, String titulo, List<Integer> anyos) {
+        this.id = id;
+        this.titulo = titulo;
+        this.anyos = anyos;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

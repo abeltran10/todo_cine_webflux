@@ -64,7 +64,7 @@ public class MovieMapper {
     public static MovieDTO toDTO(Map<String, Object> map) {
         MovieDTO movieDTO = new MovieDTO();
 
-        movieDTO.setId((long)map.get("id"));
+        movieDTO.setId(Long.valueOf(map.get("id").toString()));
         movieDTO.setOriginalTitle((String) map.get("original_title"));
         movieDTO.setTitle((String) map.get("title"));
         movieDTO.setPosterPath((String) map.get("poster_path"));

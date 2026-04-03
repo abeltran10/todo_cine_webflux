@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
+public interface MovieDAO extends ReactiveMongoRepository<Movie, Long> {
     Mono<Movie> findMovieById(Long id);
 
 
@@ -46,41 +46,43 @@ public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
 
             // 5. Proyectamos al formato final
             "{ '$project': { " +
-                    "'premioId': '$_id', " +
-                    "'titulo': 1, " +
-                    "'anyos': 1, " +
-                    "'_id': 0 " +
-                    "} }"
+                "'id': '$_id', " +  // Spring buscará 'id' o '_id'
+                "'titulo': 1, " +
+                "'anyos': 1 " +     // Eliminamos el '_id': 0 de momento para probar
+                "} }"
     })
     Mono<PremioDTO> findPremioById(Long premioId);
 
     @Aggregation(pipeline = {
-            // 1. Filtrado inicial por índice (muy rápido)
+            // 1. Filtro rápido
             "{ '$match': { 'premios': { '$elemMatch': { 'premioId': ?0, 'anyo': ?1 } } } }",
 
-            // 2. Desglosar el array para obtener un resultado por cada categoría
+            // 2. Expandir premios
             "{ '$unwind': '$premios' }",
 
-            // 3. Filtrar los premios específicos que coinciden con ID y Año
+            // 3. Filtrar el premio exacto
             "{ '$match': { 'premios.premioId': ?0, 'premios.anyo': ?1 } }",
 
-            // 4. Proyección exacta al GanadorDTO
+            // 4. Proyección: La clave es que el nombre de la izquierda
+            // debe ser IGUAL al nombre de la variable en tu DTO.
             "{ '$project': { " +
                     "'premioId': '$premios.premioId', " +
-                    "'premio': '$premios.titulo', " +      // Mapea a 'premio' en el DTO
-                    "'categoriaId': '$premios.categoriaId', " + // Asegúrate que este campo existe en tu Mongo
+                    "'premio': '$premios.titulo', " +
+                    "'categoriaId': '$premios.categoriaId', " +
                     "'categoria': '$premios.categoria', " +
                     "'anyo': '$premios.anyo', " +
-                    "'movieId': '$_id', " +                // El ID de la película
-                    "'original_title': '$original_title', " +
+
+                    // Si en tu DTO la variable se llama 'movieId', aquí va 'movieId'
+                    "'movieId': '$id', " +
+
+                    // Si tu variable en Java se llama 'originalTitle', usa 'originalTitle' aquí:
+                    "'originalTitle': '$original_title', " +
                     "'title': '$title', " +
-                    "'poster_path': '$poster_path', " +
+                    "'posterPath': '$poster_path', " +
                     "'overview': '$overview', " +
-                    "'release_date': '$release_date', " +
-                    "'_id': 0 " +                          // Importante: excluir _id para evitar conflictos
+                    "'releaseDate': '$release_date' " +
                     "} }",
 
-            // 5. Paginación
             "{ '$skip': ?2 }",
             "{ '$limit': ?3 }"
     })
@@ -88,9 +90,9 @@ public interface MovieDAO extends ReactiveMongoRepository<Movie, String> {
 
     // El conteo también debe hacerse sobre los premios "unwinded" para ser exacto
     @Aggregation(pipeline = {
-            "{ '$match': { 'premios': { '$elemMatch': { 'premioId': ?0, 'anio': ?1 } } } }",
+            "{ '$match': { 'premios': { '$elemMatch': { 'premioId': ?0, 'anyo': ?1 } } } }",
             "{ '$unwind': '$premios' }",
-            "{ '$match': { 'premios.premioId': ?0, 'premios.anio': ?1 } }",
+            "{ '$match': { 'premios.premioId': ?0, 'premios.anyo': ?1 } }",
             "{ '$count': 'total' }"
     })
     Mono<Long> countGanadoresByPremioAndAnyo(Long premioId, Integer anyo);

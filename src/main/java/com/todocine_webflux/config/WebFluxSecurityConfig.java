@@ -105,7 +105,6 @@ public class WebFluxSecurityConfig {
                         .pathMatchers(resources).permitAll()
                         .pathMatchers(paths).permitAll()
                         .pathMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                        .pathMatchers(HttpMethod.POST, "/login").permitAll()
                         .anyExchange().authenticated()
                 )
 
@@ -116,7 +115,7 @@ public class WebFluxSecurityConfig {
                 // 6. Filtros con orden correcto
                 // authFilter suele ir en AUTHENTICATION y jwtFilter en AUTHORIZATION
                 .addFilterAt(authFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-                .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHORIZATION)
+                .addFilterBefore(jwtFilter, SecurityWebFiltersOrder.AUTHORIZATION)
 
                 // 7. Logout "dummy" (200 OK)
                 .logout(lo -> lo

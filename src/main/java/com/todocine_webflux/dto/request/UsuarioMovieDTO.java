@@ -9,11 +9,11 @@ import jakarta.validation.constraints.NotNull;
 public class UsuarioMovieDTO {
 
     @JsonProperty("usuarioId")
-    @NotNull
-    private Long usuarioId;
+    @NotBlank
+    private String usuarioId;
 
     @JsonProperty("movieId")
-    @NotBlank
+    @NotNull
     private Long movieId;
 
     @JsonProperty("favoritos")
@@ -30,16 +30,16 @@ public class UsuarioMovieDTO {
     public UsuarioMovieDTO() {
     }
 
-    public UsuarioMovieDTO(Long usuarioId, Long movieId) {
+    public UsuarioMovieDTO(String usuarioId, Long movieId) {
         this.usuarioId = usuarioId;
         this.movieId = movieId;
     }
 
-    public Long getUsuarioId() {
+    public String getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(Long usuarioId) {
+    public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
     }
 

@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 public interface UsuarioDAO extends ReactiveMongoRepository<Usuario, String> {
     Mono<Usuario> findByUsername(String username);
 
-    Mono<Usuario> findUsuarioById(Long id);
+    Mono<Usuario> findUsuarioById(String id);
 }

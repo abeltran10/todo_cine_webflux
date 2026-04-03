@@ -33,7 +33,7 @@ public class UsuarioController {
     private UsuarioMovieService usuarioMovieService;
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<UsuarioDTO>> getUsuario(@NotBlank @PathVariable("id") Long id) {
+    public Mono<ResponseEntity<UsuarioDTO>> getUsuario(@NotBlank @PathVariable("id") String id) {
         return usuarioService.getUsuarioById(id)
                 .map(ResponseEntity::ok);
 
@@ -48,7 +48,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<UsuarioDTO>> updateUsuario(@NotBlank @PathVariable("id") Long id,
+    public Mono<ResponseEntity<UsuarioDTO>> updateUsuario(@NotBlank @PathVariable("id") String id,
                                                           @Valid @RequestBody UsuarioReqDTO usuarioDTO) {
         logger.info("updateUsuario");
         return usuarioService.updateUsuario(id, usuarioDTO)
@@ -58,7 +58,7 @@ public class UsuarioController {
 
     @GetMapping("/{userId}/movies")
     public Mono<ResponseEntity<Paginator<MovieDetailDTO>>> getUsuarioMovies(
-            @NotBlank @PathVariable("userId") Long userId,
+            @NotBlank @PathVariable("userId") String userId,
             @RequestParam("vista") String vista,
             @RequestParam("votada") String votada,
             @RequestParam("orderBy") String orderBy,

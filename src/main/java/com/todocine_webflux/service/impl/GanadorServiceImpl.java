@@ -42,7 +42,7 @@ public class GanadorServiceImpl implements GanadorService {
     @Override
     public Mono<Paginator<GanadorDTO>> getGanadoresByPremioIdAnyo(Long premioId, Integer anyo, Integer page) {
         int size = 21;
-        long skip = (long) page * 21;
+        long skip = (long) (page - 1) * 21;
         Paginator<GanadorDTO> paginator = new Paginator<>();
 
         return Mono.zip(
@@ -97,8 +97,10 @@ public class GanadorServiceImpl implements GanadorService {
                                 nuevoPremio.setAnyo(req.getAnyo());
                                 nuevoPremio.setCategoriaId(req.getCategoriaId());
 
+                                List<Categoria> categorias = catPremio.getCategorias();
+
                                 String nombreCat = catPremio.getCategorias().stream()
-                                        .filter(c -> c.getId().equals(String.valueOf(req.getCategoriaId())))
+                                        .filter(c -> c.getId().equals(req.getCategoriaId()))
                                         .map(Categoria::getNombre)
                                         .findFirst().get();
                                 nuevoPremio.setCategoria(nombreCat);

@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
 
 public interface UsuarioMovieDAO extends ReactiveMongoRepository<UsuarioMovie, String>  {
 
-    Mono<UsuarioMovie> findByUsuarioIdAndMovieId(Long usuarioId, Long movieId);
+    Mono<UsuarioMovie> findByUsuarioIdAndMovieId(String usuarioId, Long movieId);
 }

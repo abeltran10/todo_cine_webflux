@@ -13,7 +13,7 @@ public class UsuarioMovie {
     private String id;
 
     @Indexed // Índice simple para buscar rápido todas las películas de un usuario
-    private Long usuarioId;
+    private String usuarioId;
 
     private Long movieId;
 
@@ -36,11 +36,11 @@ public class UsuarioMovie {
         this.id = id;
     }
 
-    public Long getUsuarioId() {
+    public String getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(Long usuarioId) {
+    public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
     }
 

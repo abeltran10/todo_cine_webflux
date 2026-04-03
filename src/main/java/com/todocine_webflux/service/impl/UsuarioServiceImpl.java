@@ -63,7 +63,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
 
 
     @Override
-    public Mono<UsuarioDTO> updateUsuario(Long id, UsuarioReqDTO dto) {
+    public Mono<UsuarioDTO> updateUsuario(String id, UsuarioReqDTO dto) {
         log.info("updateUsuario -> {}", id);
 
         return checkCurrentUser(id)
@@ -77,7 +77,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
     }
 
     @Override
-    public Mono<UsuarioDTO> getUsuarioById(Long id) {
+    public Mono<UsuarioDTO> getUsuarioById(String id) {
         return checkCurrentUser(id)
                 .flatMap(usuarioDAO::findUsuarioById)
                 .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))

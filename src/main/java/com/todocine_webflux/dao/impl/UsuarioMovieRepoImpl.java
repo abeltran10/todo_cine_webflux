@@ -29,7 +29,7 @@ public class UsuarioMovieRepoImpl implements UsuarioMovieRepo {
 
 
     @Override
-    public Flux<UsuarioMovie> findWithFilters(Long userId, Map<String, String> filters, String orderBy, int offset, int limit) {
+    public Flux<UsuarioMovie> findWithFilters(String userId, Map<String, String> filters, String orderBy, int offset, int limit) {
         List<AggregationOperation> operations = new ArrayList<>();
 
         Criteria criteria = Criteria.where("usuarioId").is(userId)
@@ -70,7 +70,7 @@ public class UsuarioMovieRepoImpl implements UsuarioMovieRepo {
     }
 
     @Override
-    public Mono<Long> countWithFilters(Long userId, Map<String, String> filters) {
+    public Mono<Long> countWithFilters(String userId, Map<String, String> filters) {
         Criteria criteria = Criteria.where("usuarioId").is(userId).and("favoritos").is("S");
 
         if (!filters.get(VISTA_FILTER).isBlank()) {

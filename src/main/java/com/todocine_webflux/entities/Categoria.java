@@ -1,7 +1,10 @@
 package com.todocine_webflux.entities;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class Categoria {
 
+    @Field("id")
     private Long id;
 
     private String nombre;

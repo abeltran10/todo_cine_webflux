@@ -6,6 +6,7 @@ import com.todocine_webflux.dto.response.MovieDetailDTO;
 import com.todocine_webflux.service.MovieService;
 import com.todocine_webflux.utils.Paginator;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<MovieDetailDTO>> getMovieDetailById(@NotBlank @PathVariable("id") Long id) {
+    public Mono<ResponseEntity<MovieDetailDTO>> getMovieDetailById(@NotNull @PathVariable("id") Long id) {
         return movieService.getMovieDetailById(id)
                 .map(ResponseEntity::ok);
     }

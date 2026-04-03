@@ -44,7 +44,7 @@ public class MovieServiceImpl extends BaseServiceImpl implements MovieService {
                 .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
                 .flatMap(tuple -> {
                     Map<String, Object> movieMap = tuple.getT1();
-                    Long userId = tuple.getT2();
+                    String userId = tuple.getT2();
 
                     MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 

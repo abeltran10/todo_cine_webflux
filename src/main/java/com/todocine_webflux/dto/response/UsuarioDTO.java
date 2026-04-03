@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsuarioDTO {
 
-    private Long id;
+    private String id;
 
     @NotBlank
     private String username;
@@ -33,7 +33,7 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id) {
+    public UsuarioDTO(String id) {
         this.id = id;
     }
 
@@ -46,18 +46,18 @@ public class UsuarioDTO {
         this.enabled = true;
     }
 
-    public UsuarioDTO(Long id, String username, String rol) {
+    public UsuarioDTO(String id, String username, String rol) {
         this.id = id;
         this.username = username;
         this.rol = rol;
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

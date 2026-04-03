@@ -12,7 +12,8 @@ import java.util.Objects;
 @Document(collection = "usuarios")
 public class Usuario implements UserDetails {
 
-    private Long id;
+    @Id
+    private String id;
 
     private String username;
     private String password;
@@ -30,7 +31,7 @@ public class Usuario implements UserDetails {
         this.password = password;
     }
 
-    public Usuario(Long id, String username, String password, Boolean accountNonExpired,
+    public Usuario(String id, String username, String password, Boolean accountNonExpired,
                    Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled) {
         this.id = id;
         this.username = username;
@@ -41,11 +42,11 @@ public class Usuario implements UserDetails {
         this.enabled = enabled;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

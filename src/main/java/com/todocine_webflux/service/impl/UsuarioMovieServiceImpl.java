@@ -44,7 +44,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
 
     @Override
-    public Mono<Paginator<MovieDetailDTO>> getUsuarioMovies(Long userId,
+    public Mono<Paginator<MovieDetailDTO>> getUsuarioMovies(String userId,
                                                             Map<String, String> filters,
                                                             String orderBy,
                                                             Integer page) {
@@ -76,7 +76,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
 
     @Override
-    public Mono<MovieDetailDTO> updateUsuarioMovie(Long userId,
+    public Mono<MovieDetailDTO> updateUsuarioMovie(String userId,
                                                    Long movieId,
                                                    UsuarioMovieDTO dto) {
 
@@ -113,7 +113,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
                 }));
     }
 
-    private Mono<Movie> upsertUsuarioMovie(Long userId,
+    private Mono<Movie> upsertUsuarioMovie(String userId,
                                                                  Movie movie,
                                                                  UsuarioMovieDTO dto) {
 

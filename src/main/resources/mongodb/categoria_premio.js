@@ -33,7 +33,8 @@ db.categoria_premio.insertMany([
             { id: 24, nombre: "Guión adaptado" },
             { id: 25, nombre: "Guión original" },
             { id: 26, nombre: "Película europea" },
-            { id: 27, nombre: "Película documental" }
+            { id: 27, nombre: "Película documental" },
+            { id: 30, nombre: "Canción original" }
         ]
     },
     {

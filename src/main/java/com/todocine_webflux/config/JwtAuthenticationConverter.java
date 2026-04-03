@@ -1,6 +1,7 @@
 package com.todocine_webflux.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.todocine_webflux.dto.request.UsuarioReqDTO;
 import com.todocine_webflux.dto.response.UsuarioDTO;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
@@ -28,7 +29,7 @@ public class JwtAuthenticationConverter implements ServerAuthenticationConverter
                     buffer.read(bytes);
                     DataBufferUtils.release(buffer);                   // evita memory leak
                     try {
-                        UsuarioDTO creds = mapper.readValue(bytes, UsuarioDTO.class);
+                        UsuarioReqDTO creds = mapper.readValue(bytes, UsuarioReqDTO.class);
                         return Mono.just(new UsernamePasswordAuthenticationToken(
                                 creds.getUsername(), creds.getPassword()));
                     } catch (IOException e) {

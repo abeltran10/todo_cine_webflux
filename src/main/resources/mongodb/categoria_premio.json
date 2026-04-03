@@ -1,0 +1,37 @@
+{
+  "_schema": "AwardCategoryDocument",
+  "version": "1.0",
+  "collection": "categoria_premio",
+  "properties": {
+    "_id": {
+      "bsonType": "objectId",
+      "description": "Unique MongoDB internal identifier"
+    },
+    "premioId": {
+      "bsonType": "long",
+      "description": "Unique business ID for the award ceremony (referenced in movies.awards.awardId)"
+    },
+    "titulo": {
+      "bsonType": "string",
+      "description": "Name of the award ceremony (e.g., Goya, Oscars)"
+    },
+    "categorias": {
+      "bsonType": "array",
+      "description": "List of specific categories belonging to this award (1:N Relation)",
+      "items": {
+        "bsonType": "object",
+        "required": ["id", "nombre"],
+        "properties": {
+          "id": {
+            "bsonType": "long",
+            "description": "Unique ID for the specific category within this award"
+          },
+          "nombre": {
+            "bsonType": "string",
+            "description": "Descriptive name of the category (e.g., Best Film, Best Director)"
+          }
+        }
+      }
+    }
+  }
+}

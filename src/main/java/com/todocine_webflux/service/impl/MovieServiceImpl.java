@@ -2,11 +2,8 @@ package com.todocine_webflux.service.impl;
 
 import com.todocine_webflux.dao.MovieDAO;
 import com.todocine_webflux.dao.UsuarioMovieDAO;
-import com.todocine_webflux.dto.MovieDTO;
-import com.todocine_webflux.dto.MovieDetailDTO;
-import com.todocine_webflux.entities.Movie;
-import com.todocine_webflux.entities.Usuario;
-import com.todocine_webflux.entities.UsuarioMovie;
+import com.todocine_webflux.dto.response.MovieDTO;
+import com.todocine_webflux.dto.response.MovieDetailDTO;
 import com.todocine_webflux.exceptions.BadGatewayException;
 import com.todocine_webflux.exceptions.BadRequestException;
 import com.todocine_webflux.exceptions.NotFoudException;
@@ -41,37 +38,35 @@ public class MovieServiceImpl extends BaseServiceImpl implements MovieService {
     private UsuarioMovieDAO usuarioMovieDAO;
 
     @Override
-    public Mono<MovieDetailDTO> getMovieDetailById(String id) {
-        return tmdbService.getMovieById(id)
-                .flatMap(movieMap -> {
-                    if (movieMap.get("id") == null) {
-                        return Mono.error(new NotFoudException(MOVIE_NOTFOUND));
-                    }
+    public Mono<MovieDetailDTO> getMovieDetailById(Long id) {
+
+        return Mono.zip(tmdbService.getMovieById(String.valueOf(id)), getCurrentUserId())
+                .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
+                .flatMap(tuple -> {
+                    Map<String, Object> movieMap = tuple.getT1();
+                    String userId = tuple.getT2();
 
                     MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 
-                    return movieDAO.findById(id)
-                            .flatMap(dbMovie -> {
-                                // dbMovie existe
-                                MovieDTO dbMovieDTO = MovieMapper.toDTO(dbMovie);
-                                movieDTO.setVotosMediaTC(dbMovieDTO.getVotosMediaTC());
-                                movieDTO.setTotalVotosTC(dbMovieDTO.getTotalVotosTC());
-                                return Mono.just(movieDTO);
+                    return movieDAO.findMovieById(id)
+                            .map(movie -> {
+                                movieDTO.setVotosMediaTC(movie.getVotosMediaTC());
+                                movieDTO.setTotalVotosTC(movie.getTotalVotosTC());
+
+                                return movieDTO;
                             })
-                            .switchIfEmpty(Mono.just(movieDTO)) // si no existe en BD, seguimos con el movieDTO original
-                            .flatMap(updatedMovieDTO ->
-                                    getCurrentUserId()
-                                            .flatMap(userId -> usuarioMovieDAO.findByUsuarioIdAndMovieId(userId, id))
-                                            .flatMap(um -> {
-                                                boolean favorito = "S".equals(um.getFavoritos());
-                                                boolean vista = "S".equals(um.getVista());
-                                                Double voto = um.getVoto();
-                                                return Mono.just(new MovieDetailDTO(updatedMovieDTO, favorito, voto, vista));
-                                            })
-                                            .switchIfEmpty(Mono.just(new MovieDetailDTO(updatedMovieDTO, false, null, false)))
+                            .defaultIfEmpty(movieDTO)
+                            .flatMap(dto -> usuarioMovieDAO.findByUsuarioIdAndMovieId(userId, id)
+                                    .map(um -> new MovieDetailDTO(
+                                            dto,
+                                            "S".equals(um.getFavoritos()),
+                                            um.getVoto(),
+                                            "S".equals(um.getVista())
+                                    ))
+                                    .switchIfEmpty(Mono.just(new MovieDetailDTO(dto, false, null, false)))
                             );
                 })
-                .onErrorMap(IOException.class, ex -> new BadGatewayException(TMDB_ERROR));
+                .onErrorMap(IOException.class, e -> new BadGatewayException(TMDB_ERROR));
     }
 
     @Override

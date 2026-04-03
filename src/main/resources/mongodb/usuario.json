@@ -1,0 +1,39 @@
+{
+  "_schema": "UserDocument",
+  "version": "1.0",
+  "collection": "usuarios",
+  "properties": {
+    "_id": {
+      "bsonType": "objectId",
+      "description": "Unique MongoDB internal identifier (Primary Key)"
+    },
+    "username": {
+      "bsonType": "string",
+      "description": "Unique login name for the user (should be indexed)"
+    },
+    "password": {
+      "bsonType": "string",
+      "description": "BCrypt hashed password string"
+    },
+    "accountNonExpired": {
+      "bsonType": "bool",
+      "description": "Spring Security flag: true if the account is still valid"
+    },
+    "accountNonLocked": {
+      "bsonType": "bool",
+      "description": "Spring Security flag: true if the account is not suspended"
+    },
+    "credentialsNonExpired": {
+      "bsonType": "bool",
+      "description": "Spring Security flag: true if the password hasn't expired"
+    },
+    "enabled": {
+      "bsonType": "bool",
+      "description": "Spring Security flag: true if the user is active"
+    },
+    "rol": {
+      "bsonType": "string",
+      "description": "Assigned security role (e.g., 'ADMIN', 'USER')"
+    }
+  }
+}

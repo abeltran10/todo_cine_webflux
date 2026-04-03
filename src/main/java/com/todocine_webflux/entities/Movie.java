@@ -2,12 +2,15 @@ package com.todocine_webflux.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "movies")
 public class Movie {
 
-    @Id
-    private String id;
+    private Long id;
 
     private String originalTitle;
 
@@ -31,14 +34,16 @@ public class Movie {
 
     private Double votosMediaTC;
 
+    private List<Premio> premios = new ArrayList<>();
+
     public Movie() {
     }
 
-    public Movie(String id) {
+    public Movie(Long id) {
         this.id = id;
     }
 
-    public Movie(String id, String originalTitle, String title, String posterPath, String overview, String releaseDate,
+    public Movie(Long id, String originalTitle, String title, String posterPath, String overview, String releaseDate,
                  Double popularity, Integer voteCount, Double voteAverage, String originalLanguage,
                  Integer totalVotosTC, Double votosMediaTC) {
         this.id = id;
@@ -55,11 +60,11 @@ public class Movie {
         this.votosMediaTC = votosMediaTC;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -149,5 +154,13 @@ public class Movie {
 
     public void setVotosMediaTC(Double votosMediaTC) {
         this.votosMediaTC = votosMediaTC;
+    }
+
+    public List<Premio> getPremios() {
+        return premios;
+    }
+
+    public void setPremios(List<Premio> premios) {
+        this.premios = premios;
     }
 }

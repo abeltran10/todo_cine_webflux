@@ -1,7 +1,7 @@
 package com.todocine_webflux.utils.mappers;
 
 
-import com.todocine_webflux.dto.GenreDTO;
+import com.todocine_webflux.dto.response.GenreDTO;
 
 import java.util.Map;
 

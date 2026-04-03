@@ -1,4 +1,4 @@
-package com.todocine_webflux.dto;
+package com.todocine_webflux.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,15 +12,19 @@ public class VideoDTO {
     private String id;
 
     @JsonProperty("name")
+    @NotBlank
     private String name;
 
     @JsonProperty("key")
+    @NotBlank
     private String key;
 
     @JsonProperty("site")
+    @NotBlank
     private String site;
 
     @JsonProperty("type")
+    @NotBlank
     private String type;
 
     public VideoDTO() {
@@ -77,4 +81,16 @@ public class VideoDTO {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Video{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", key='" + key + '\'' +
+                ", site='" + site + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
+

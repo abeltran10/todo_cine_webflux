@@ -1,0 +1,31 @@
+{
+  "_schema": "UserMovieInteractionDocument",
+  "version": "1.0",
+  "collection": "usuario_movie",
+  "properties": {
+    "_id": {
+      "bsonType": "string",
+      "description": "Unique MongoDB internal identifier (String UUID or ObjectId)"
+    },
+    "usuarioId": {
+      "bsonType": "string",
+      "description": "Reference to the User ID (Indexed for fast lookups of user libraries)"
+    },
+    "movieId": {
+      "bsonType": "long",
+      "description": "Reference to the Movie ID (TMDB ID from the movies collection)"
+    },
+    "favoritos": {
+      "bsonType": "string",
+      "description": "Flag or category indicating if the movie is in the user's favorites list"
+    },
+    "vista": {
+      "bsonType": "string",
+      "description": "Status indicating if the movie has been watched (e.g., 'YES', 'NO', 'PENDING')"
+    },
+    "voto": {
+      "bsonType": "double",
+      "description": "Numerical score given by the user to this specific movie"
+    }
+  }
+}

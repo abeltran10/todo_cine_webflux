@@ -1,6 +1,6 @@
 package com.todocine_webflux.utils.mappers;
 
-import com.todocine_webflux.dto.UsuarioDTO;
+import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 
 public class UserMapper {
@@ -15,6 +15,7 @@ public class UserMapper {
         usuario.setAccountNonLocked(usuarioDTO.getAccountNonLocked());
         usuario.setCredentialsNonExpired(usuarioDTO.getCredentialsNonExpired());
         usuario.setEnabled(usuarioDTO.getEnabled());
+        usuario.setRol(usuarioDTO.getRol());
 
         return usuario;
     }
@@ -24,7 +25,7 @@ public class UserMapper {
 
         usuarioDTO.setId(usuario.getId());
         usuarioDTO.setUsername(usuario.getUsername());
-        usuarioDTO.setPassword(usuario.getPassword());
+        usuarioDTO.setRol(usuario.getRol());
 
         return usuarioDTO;
     }

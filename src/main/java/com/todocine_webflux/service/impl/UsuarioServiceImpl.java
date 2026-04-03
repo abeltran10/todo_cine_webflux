@@ -1,9 +1,11 @@
 package com.todocine_webflux.service.impl;
 
 import com.todocine_webflux.dao.UsuarioDAO;
-import com.todocine_webflux.dto.UsuarioDTO;
+import com.todocine_webflux.dto.request.UsuarioReqDTO;
+import com.todocine_webflux.dto.response.UsuarioDTO;
 import com.todocine_webflux.entities.Usuario;
 import com.todocine_webflux.exceptions.BadRequestException;
+import com.todocine_webflux.exceptions.ConflictException;
 import com.todocine_webflux.exceptions.NotFoudException;
 import com.todocine_webflux.service.UsuarioService;
 import com.todocine_webflux.utils.mappers.UserMapper;
@@ -43,26 +45,17 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
 
 
     @Override
-    public Mono<UsuarioDTO> getUsuarioByName(String username) {
-        log.info("getUsuarioByName -> {}", username);
-
-        return usuarioDAO.findByUsername(username)
-                .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))
-                .flatMap(this::checkCurrentUser) // verificación de autorización
-                .map(UserMapper::toDTO);
-    }
-
-    @Override
-    public Mono<UsuarioDTO> insertUsuario(UsuarioDTO dto) {
+    public Mono<UsuarioDTO> insertUsuario(UsuarioReqDTO dto) {
         return usuarioDAO.findByUsername(dto.getUsername())
                 .hasElement()
                 .flatMap(exists -> {
                     if (exists) {
-                        return Mono.error(new BadRequestException(USER_EXISTS));
+                        return Mono.error(new ConflictException(USER_EXISTS));
                     }
                     Usuario usuario = new Usuario(
                             dto.getUsername(),
                             passwordEncoder().encode(dto.getPassword()));
+                    usuario.setRol("USUARIO");
                     return usuarioDAO.save(usuario);
                 })
                 .map(UserMapper::toDTO);
@@ -70,11 +63,11 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
 
 
     @Override
-    public Mono<UsuarioDTO> updateUsuario(String id, UsuarioDTO dto) {
+    public Mono<UsuarioDTO> updateUsuario(String id, UsuarioReqDTO dto) {
         log.info("updateUsuario -> {}", id);
 
         return checkCurrentUser(id)
-                .flatMap(usuarioDAO::findById)
+                .flatMap(usuarioDAO::findUsuarioById)
                 .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))
                 .flatMap(u -> {
                     u.setPassword(passwordEncoder().encode(dto.getPassword()));
@@ -86,7 +79,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl implements ReactiveUserD
     @Override
     public Mono<UsuarioDTO> getUsuarioById(String id) {
         return checkCurrentUser(id)
-                .flatMap(usuarioDAO::findById)
+                .flatMap(usuarioDAO::findUsuarioById)
                 .switchIfEmpty(Mono.error(new NotFoudException(USER_NOTFOUND)))
                 .map(UserMapper::toDTO);
     }

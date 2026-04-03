@@ -1,4 +1,4 @@
-package com.todocine_webflux.dto;
+package com.todocine_webflux.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,12 +9,12 @@ import jakarta.validation.constraints.NotNull;
 public class UsuarioMovieDTO {
 
     @JsonProperty("usuarioId")
-    @NotNull
+    @NotBlank
     private String usuarioId;
 
     @JsonProperty("movieId")
-    @NotBlank
-    private String movieId;
+    @NotNull
+    private Long movieId;
 
     @JsonProperty("favoritos")
     @NotNull
@@ -30,7 +30,7 @@ public class UsuarioMovieDTO {
     public UsuarioMovieDTO() {
     }
 
-    public UsuarioMovieDTO(String usuarioId, String movieId) {
+    public UsuarioMovieDTO(String usuarioId, Long movieId) {
         this.usuarioId = usuarioId;
         this.movieId = movieId;
     }
@@ -43,11 +43,11 @@ public class UsuarioMovieDTO {
         this.usuarioId = usuarioId;
     }
 
-    public String getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
 

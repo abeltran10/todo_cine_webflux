@@ -2,9 +2,9 @@ package com.todocine_webflux.utils.mappers;
 
 
 
-import com.todocine_webflux.dto.GenreDTO;
-import com.todocine_webflux.dto.MovieDTO;
-import com.todocine_webflux.dto.VideoDTO;
+import com.todocine_webflux.dto.response.GenreDTO;
+import com.todocine_webflux.dto.response.MovieDTO;
+import com.todocine_webflux.dto.response.VideoDTO;
 import com.todocine_webflux.entities.Movie;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class MovieMapper {
     public static MovieDTO toDTO(Map<String, Object> map) {
         MovieDTO movieDTO = new MovieDTO();
 
-        movieDTO.setId(String.valueOf(map.get("id")));
+        movieDTO.setId(Long.valueOf(map.get("id").toString()));
         movieDTO.setOriginalTitle((String) map.get("original_title"));
         movieDTO.setTitle((String) map.get("title"));
         movieDTO.setPosterPath((String) map.get("poster_path"));

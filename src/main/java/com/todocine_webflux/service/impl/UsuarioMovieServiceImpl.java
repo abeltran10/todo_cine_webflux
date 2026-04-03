@@ -1,12 +1,11 @@
 package com.todocine_webflux.service.impl;
 
-import com.todocine_webflux.config.Constants;
 import com.todocine_webflux.dao.MovieDAO;
 import com.todocine_webflux.dao.UsuarioMovieDAO;
 import com.todocine_webflux.dao.UsuarioMovieRepo;
-import com.todocine_webflux.dto.MovieDTO;
-import com.todocine_webflux.dto.MovieDetailDTO;
-import com.todocine_webflux.dto.UsuarioMovieDTO;
+import com.todocine_webflux.dto.response.MovieDTO;
+import com.todocine_webflux.dto.response.MovieDetailDTO;
+import com.todocine_webflux.dto.request.UsuarioMovieDTO;
 import com.todocine_webflux.entities.Movie;
 import com.todocine_webflux.entities.UsuarioMovie;
 import com.todocine_webflux.exceptions.NotFoudException;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 
 import java.util.Map;
 
@@ -54,6 +52,8 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
         int limit  = 21;
         int offset = (page - 1) * limit;
 
+        Paginator<MovieDetailDTO> paginator = new Paginator<>();
+
         return checkCurrentUser(userId)
                 .flatMapMany(ok -> usuarioMovieRepo
                         .findWithFilters(userId, filters, orderBy, offset, limit))
@@ -61,16 +61,15 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
                 .collectList()
                 .flatMap(list -> {
                     if (list.isEmpty()) {
-                        return Mono.error(new NotFoudException(FAVORITOS_NOTFOUND));
+                        return Mono.just(paginator);
                     }
                     return usuarioMovieRepo.countWithFilters(userId, filters)
                             .map(total -> {
-                                Paginator<MovieDetailDTO> p = new Paginator<>();
-                                p.setResults(list);
-                                p.setTotalResults(total.intValue());
-                                p.setTotalPages((int) (total / (limit + 1)) + 1);
-                                p.setPage(page);
-                                return p;
+                                paginator.setResults(list);
+                                paginator.setTotalResults(total.intValue());
+                                paginator.setTotalPages((int) Math.ceil((double) total.intValue()/ limit));
+                                paginator.setPage(page);
+                                return paginator;
                             });
                 });
     }
@@ -78,11 +77,11 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
     @Override
     public Mono<MovieDetailDTO> updateUsuarioMovie(String userId,
-                                                   String movieId,
+                                                   Long movieId,
                                                    UsuarioMovieDTO dto) {
 
         return checkCurrentUser(userId)
-                .flatMap(ok -> tmdbService.getMovieById(dto.getMovieId()))
+                .flatMap(ok -> tmdbService.getMovieById(String.valueOf(dto.getMovieId())))
                 .switchIfEmpty(Mono.error(new NotFoudException(MOVIE_NOTFOUND)))
                 .flatMap(movieMap -> upsertMovie(movieMap, movieId))
                 .flatMap(movie -> upsertUsuarioMovie(userId, movie, dto))
@@ -91,7 +90,7 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
 
     private Mono<MovieDetailDTO> toMovieDetail(UsuarioMovie um) {
-        return movieDAO.findById(um.getMovieId())
+        return movieDAO.findMovieById(um.getMovieId())
                 .switchIfEmpty(Mono.empty())
                 .map(movie ->
                      new MovieDetailDTO(
@@ -104,10 +103,10 @@ public class UsuarioMovieServiceImpl extends BaseServiceImpl implements UsuarioM
 
     }
     
-    private Mono<Movie> upsertMovie(Map<String, Object> movieMap, String movieId) {
+    private Mono<Movie> upsertMovie(Map<String, Object> movieMap, Long movieId) {
         MovieDTO movieDTO = MovieMapper.toDTO(movieMap);
 
-        return movieDAO.findById(movieId)
+        return movieDAO.findMovieById(movieId)
                 .switchIfEmpty(Mono.defer(() -> {
                     Movie newMovie = MovieMapper.toEntity(movieDTO);
                     return movieDAO.save(newMovie);

@@ -1,9 +1,7 @@
 package com.todocine_webflux.utils.mappers;
 
 
-import com.todocine_webflux.dto.UsuarioMovieDTO;
-import com.todocine_webflux.entities.Movie;
-import com.todocine_webflux.entities.Usuario;
+import com.todocine_webflux.dto.request.UsuarioMovieDTO;
 import com.todocine_webflux.entities.UsuarioMovie;
 
 public class UsuarioMovieMapper {

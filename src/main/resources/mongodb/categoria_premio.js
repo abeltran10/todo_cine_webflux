@@ -35,7 +35,8 @@ db.categoria_premio.insertMany([
             { id: 26, nombre: "Película europea" },
             { id: 27, nombre: "Película documental" },
             { id: 30, nombre: "Canción original" }
-        ]
+        ],
+        anyos: [2024, 2025, 2026]
     },
     {
         premioId: 2,
@@ -54,7 +55,8 @@ db.categoria_premio.insertMany([
             { id: 25, nombre: "Guión original" },
             { id: 28, nombre: "Película de habla no inglesa" },
             { id: 29, nombre: "Banda sonora" }
-        ]
+        ],
+        anyos: [2026]
     },
     {
         premioId: 3,
@@ -81,7 +83,8 @@ db.categoria_premio.insertMany([
             { id: 32, nombre: "Mejor cortometraje" },
             { id: 33, nombre: "Mejor fotografía" },
             { id: 35, nombre: "Mejor casting" }
-        ]
+        ],
+        anyos: [2026]
     }
 ]);
 

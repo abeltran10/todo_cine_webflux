@@ -7,4 +7,6 @@ import reactor.core.publisher.Mono;
 public interface CategoriaPremioDAO extends ReactiveMongoRepository<CategoriaPremio, String>  {
 
     Mono<CategoriaPremio> findByPremioId(Long premioId);
+
+
 }

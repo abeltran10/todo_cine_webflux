@@ -18,6 +18,8 @@ public class CategoriaPremio {
 
     private List<Categoria> categorias = new ArrayList<>();
 
+    private List<Integer> anyos = new ArrayList<>();
+
     public CategoriaPremio() {
     }
 
@@ -55,5 +57,13 @@ public class CategoriaPremio {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public List<Integer> getAnyos() {
+        return anyos;
+    }
+
+    public void setAnyos(List<Integer> anyos) {
+        this.anyos = anyos;
     }
 }

@@ -32,6 +32,11 @@
           }
         }
       }
+    },
+    "anyos": {
+      "bsonType": "array",
+      "items": { "bsonType": "int" },
+      "description": "List of years this award has been held (e.g., [2024, 2025, 2026])"
     }
   }
 }

@@ -15,44 +15,6 @@ import reactor.core.publisher.Mono;
 public interface MovieDAO extends ReactiveMongoRepository<Movie, Long> {
     Mono<Movie> findMovieById(Long id);
 
-
-    @Aggregation(pipeline = {
-            "{ '$unwind': '$premios' }",
-            "{ '$group': { " +
-                    "'_id': '$premios.premioId', " +
-                    "'titulo': { '$first': '$premios.titulo' }, " +
-                    "'anyos': { '$addToSet': '$premios.anyo' } " + // Crea la lista de años únicos
-                    "} }",
-            "{ '$project': { 'premioId': '$_id', 'titulo': 1, 'anyos': 1, '_id': 0 } }"
-    })
-    Flux<PremioDTO> findDistinctPremiosConAnyos(); // Retorna directamente el DTO
-
-    @Aggregation(pipeline = {
-            // 1. Filtramos las películas que contienen ese premio para no procesar toda la DB
-            "{ '$match': { 'premios.premioId': ?0 } }",
-
-            // 2. Desglosamos el array
-            "{ '$unwind': '$premios' }",
-
-            // 3. Volvemos a filtrar (tras el unwind) para quedarnos solo con el premio buscado
-            "{ '$match': { 'premios.premioId': ?0 } }",
-
-            // 4. Agrupamos para obtener el título y la lista de años únicos
-            "{ '$group': { " +
-                    "'_id': '$premios.premioId', " +
-                    "'titulo': { '$first': '$premios.titulo' }, " +
-                    "'anyos': { '$addToSet': '$premios.anyo' } " +
-                    "} }",
-
-            // 5. Proyectamos al formato final
-            "{ '$project': { " +
-                "'id': '$_id', " +  // Spring buscará 'id' o '_id'
-                "'titulo': 1, " +
-                "'anyos': 1 " +     // Eliminamos el '_id': 0 de momento para probar
-                "} }"
-    })
-    Mono<PremioDTO> findPremioById(Long premioId);
-
     @Aggregation(pipeline = {
             // 1. Filtro rápido
             "{ '$match': { 'premios': { '$elemMatch': { 'premioId': ?0, 'anyo': ?1 } } } }",

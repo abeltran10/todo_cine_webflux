@@ -578,7 +578,7 @@ Requires ADMIN role.
 
 ```json
 
-
+{
   "_schema": "AwardCategoryDocument",
   "version": "1.0",
   "collection": "categoria_premio",
@@ -612,6 +612,11 @@ Requires ADMIN role.
           }
         }
       }
+    },
+    "anyos": {
+      "bsonType": "array",
+      "items": { "bsonType": "int" },
+      "description": "List of years this award has been held (e.g., [2024, 2025, 2026])"
     }
   }
 }

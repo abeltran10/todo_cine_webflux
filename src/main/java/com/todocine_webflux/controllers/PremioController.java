@@ -5,6 +5,7 @@ import com.todocine_webflux.dto.response.PremioDTO;
 import com.todocine_webflux.service.CategoriaPremioService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class PremioController {
     private CategoriaPremioService categoriaPremioService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public Flux<PremioDTO> getPremios() {
         // Flux emite N elementos uno a uno.
         return categoriaPremioService.getPremios();
@@ -33,6 +35,7 @@ public class PremioController {
 
     @GetMapping("/{id}/categorias")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     public Flux<CategoriaDTO> getCategorias(@NotNull @PathVariable("id") Long id) {
         return categoriaPremioService.getCategorias(id);
     }

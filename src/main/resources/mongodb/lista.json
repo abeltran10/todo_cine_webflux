@@ -1,0 +1,54 @@
+{
+  "_schema": "ListDocument",
+  "version": "1.0",
+  "collection": "listas",
+  "properties": {
+    "_id": {
+      "bsonType": "objectId",
+      "description": "Unique ID for this custom list"
+    },
+    "name": {
+      "bsonType": "string",
+      "description": "Name of the list (e.g., 'Best Sci-Fi of the 2020s')"
+    },
+    "description": {
+      "bsonType": "string",
+      "description": "Brief summary of what this list is about"
+    },
+    "userId": {
+      "bsonType": "string",
+      "description": "The ID of the owner (matches usuarios._id)"
+    },
+    "publica": {
+      "bsonType": "string",
+      "description": "S if anyone can see it, N if private"
+    },
+    "movies": {
+      "bsonType": "array",
+      "description": "Movies included in this list (Subset Pattern)",
+      "items": {
+        "bsonType": "object",
+        "required": ["movieId"],
+        "properties": {
+          "movieId": {
+            "bsonType": "long",
+            "description": "TMDB ID of the movie"
+          },
+          "title": {
+            "bsonType": "string",
+            "description": "Cached title for quick preview rendering"
+          },
+          "posterPath": {
+            "bsonType": "string",
+            "description": "Cached poster path for thumbnails"
+          },
+          "releaseDate": {
+            "bsonType": "string",
+            "format": "date",
+            "description": "The official theatrical release date (ISO 8601)"
+          }
+        }
+      }
+    }
+  }
+}

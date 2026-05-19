@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.todocine-webflux</groupId>
 	<artifactId>todocine-webflux</artifactId>
-	<version>v1.0.0</version>
+	<version>v1.1.0</version>
 	<name>todocine-webflux</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>

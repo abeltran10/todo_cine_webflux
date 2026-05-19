@@ -18,7 +18,7 @@ application.properties loads properties from three files, one per environment (p
 - Add application.properties and Constants.java files to project
 - Execute [mvn clean install] command and deploy .jar file generated
 
-## API Version: v1.0.0
+## API Version: v1.1.0
 API managed with Spring Boot, JWT security, and movie catalog with custom exception handling.
 
 ### Available authorizations
@@ -339,6 +339,236 @@ Requires ADMIN role.
 | BearerAuth |  |
 
 ---
+
+### [GET] /usuarios/{userId}/listas
+**Get user's lists of movies**
+
+Returns a paginated list of all movie lists created by a specific user.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| page | query | Page index (1..N) | Yes | integer |
+| userId | path | Unique identifier of the user who owns the lists | Yes | long |
+
+#### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Paginated lists retrieved successfully | **application/json**: [Paginator](#paginator)<br> |
+| 400 | Invalid data. |  |
+| 403 | Access denied. |  |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+### [POST] /usuarios/{userId}/listas
+**Create a new list of movies**
+
+Registers a new list of movies associated with the specified user.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| userId | path | Unique identifier of the user who owns the lists | Yes | long |
+
+#### Request Body
+
+| Required | Schema |
+| -------- | ------ |
+|  Yes | **application/json**: [ListaReqDTO](#listareqdto)<br> |
+
+#### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 201 | List created successfully | **application/json**: [ListaDTO](#listadto)<br> |
+| 400 | Invalid data. |  |
+| 403 | Access denied. |  |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+### [PUT] /usuarios/{userId}/listas/{id}
+**Update an existing list**
+
+Updates the name, description, or the entire movie collection of a specific list.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| userId | path |  | Yes | long |
+| id | path | Unique identifier of the specific list of movies | Yes | long |
+
+#### Request Body
+
+| Required | Schema |
+| -------- | ------ |
+|  Yes | **application/json**: [ListaReqDTO](#listareqdto)<br> |
+
+#### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | List updated successfully | **application/json**: [ListaDTO](#listadto)<br> |
+| 400 | Invalid data. |  |
+| 403 | Access denied. |  |
+| 404 | Not found. |  |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+### [DELETE] /usuarios/{userId}/listas/{id}
+**Delete a list of movies**
+
+Permanently removes the list from the user's profile.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| userId | path |  | Yes | long |
+| id | path | Unique identifier of the specific list of movies | Yes | long |
+
+#### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 204 | List deleted successfully (No Content) |
+| 400 | Invalid data. |
+| 403 | Access denied. |
+| 404 | Not found. |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+### [POST] /usuarios/{userId}/listas/{listaId}/movies/{movieId}
+**Add movie to list**
+
+Adds a specific movie to the list. If the movie does not exist in the local database, it will be persisted.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| userId | path |  | Yes | long |
+| listaId | path |  | Yes | long |
+| movieId | path |  | Yes | long |
+
+#### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Movie added successfully. Returns the updated list. | **application/json**: [ListaDTO](#listadto)<br> |
+| 400 | Invalid data. |  |
+| 403 | Access denied. |  |
+| 404 | Not found. |  |
+| 502 | External server error. |  |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+### [DELETE] /usuarios/{userId}/listas/{listaId}/movies/{movieId}
+**Remove movie from list**
+
+Removes the relationship between the movie and the list without deleting the movie from the global catalog.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| userId | path |  | Yes | long |
+| listaId | path |  | Yes | long |
+| movieId | path |  | Yes | long |
+
+#### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 204 | Movie removed from list successfully |
+| 400 | Invalid data. |
+| 403 | Access denied. |
+| 404 | Not found. |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+---
+
+### [GET] /listas
+**Get public lists of movies**
+
+Returns a paginated list of all public movie lists.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| page | query | Page index (1..N) | Yes | integer |
+
+#### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | Paginated lists retrieved successfully | **application/json**: [Paginator](#paginator)<br> |
+| 400 | Invalid data. |  |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+---
+
+### [GET] /listas/{id}
+**Get details of the movie list**
+
+Returns the full details of a specific list, including its metadata and movie collection.
+
+#### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ------ |
+| id | path | Unique identifier of the specific list of movies | Yes | long |
+
+#### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | List details retrieved successfully | **application/json**: [ListaDTO](#listadto)<br> |
+| 400 | Invalid data. |  |
+| 403 | Access denied. |  |
+| 404 | Not found. |  |
+
+##### Security
+
+| Security Schema | Scopes |
+| --------------- | ------ |
+| BearerAuth |  |
+
+---
 ### Schemas
 
 #### UsuarioReqDTO
@@ -475,6 +705,35 @@ Requires ADMIN role.
 | titulo | string | Award name | Yes |
 | anyos | [ integer ] | Award years | No |
 
+#### ListaDTO
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | long | Unique list ID | Yes |
+| nombre | string | List name | Yes |
+| descripcion | string | List description | Yes |
+| username | string | List owner | Yes |
+| publica | boolean | List visibility | Yes |
+| movies | [ [MovieListaDTO](#movielistadto) ] | Movies in the list | No |
+
+#### ListaReqDTO
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | long | Unique list ID | No |
+| nombre | string | List name | Yes |
+| descripcion | string | List description | Yes |
+| username | string | List owner | Yes |
+| publica | boolean | List visibility | No |
+
+#### MovieListaDTO
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | long | Unique ID | Yes |
+| title | string | Title | Yes |
+| poster_path | string | Image path | Yes |
+| release_date | string | Release date | Yes |
 
 ## Database schema
 
@@ -700,6 +959,67 @@ Requires ADMIN role.
     "voto": {
       "bsonType": "double",
       "description": "Numerical score given by the user to this specific movie"
+    }
+  }
+}
+
+```
+
+### Lista
+
+```json
+
+{
+  "_schema": "ListDocument",
+  "version": "1.0",
+  "collection": "listas",
+  "properties": {
+    "_id": {
+      "bsonType": "objectId",
+      "description": "Unique ID for this custom list"
+    },
+    "nombre": {
+      "bsonType": "string",
+      "description": "Name of the list (e.g., 'Best Sci-Fi of the 2020s')"
+    },
+    "descripcion": {
+      "bsonType": "string",
+      "description": "Brief summary of what this list is about"
+    },
+    "username": {
+      "bsonType": "string",
+      "description": "The user name"
+    },
+    "publica": {
+      "bsonType": "string",
+      "description": "S if anyone can see it, N if private"
+    },
+    "movies": {
+      "bsonType": "array",
+      "description": "Movies included in this list (Subset Pattern)",
+      "items": {
+        "bsonType": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "bsonType": "long",
+            "description": "TMDB ID of the movie"
+          },
+          "title": {
+            "bsonType": "string",
+            "description": "Cached title for quick preview rendering"
+          },
+          "posterPath": {
+            "bsonType": "string",
+            "description": "Cached poster path for thumbnails"
+          },
+          "releaseDate": {
+            "bsonType": "string",
+            "format": "date",
+            "description": "The official theatrical release date (ISO 8601)"
+          }
+        }
+      }
     }
   }
 }

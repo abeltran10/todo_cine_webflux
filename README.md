@@ -18,7 +18,7 @@ application.properties loads properties from three files, one per environment (p
 - Add application.properties and Constants.java files to project
 - Execute [mvn clean install] command and deploy .jar file generated
 
-## API Version: v1.1.0
+## API Version: v1.1.1
 API managed with Spring Boot, JWT security, and movie catalog with custom exception handling.
 
 ### Available authorizations

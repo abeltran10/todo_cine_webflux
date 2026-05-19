@@ -7,17 +7,17 @@
       "bsonType": "objectId",
       "description": "Unique ID for this custom list"
     },
-    "name": {
+    "nombre": {
       "bsonType": "string",
       "description": "Name of the list (e.g., 'Best Sci-Fi of the 2020s')"
     },
-    "description": {
+    "descripcion": {
       "bsonType": "string",
       "description": "Brief summary of what this list is about"
     },
-    "userId": {
+    "username": {
       "bsonType": "string",
-      "description": "The ID of the owner (matches usuarios._id)"
+      "description": "The user name"
     },
     "publica": {
       "bsonType": "string",
@@ -28,9 +28,9 @@
       "description": "Movies included in this list (Subset Pattern)",
       "items": {
         "bsonType": "object",
-        "required": ["movieId"],
+        "required": ["id"],
         "properties": {
-          "movieId": {
+          "id": {
             "bsonType": "long",
             "description": "TMDB ID of the movie"
           },

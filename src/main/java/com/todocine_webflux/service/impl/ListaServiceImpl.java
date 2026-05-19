@@ -110,110 +110,119 @@ public class ListaServiceImpl extends BaseServiceImpl implements ListaService {
     }
 
     @Override
-    public Mono<ListaDTO> createLista(String userId, ListaReqDTO listaDTO) {
-        return usuarioDAO.findById(userId)
-                .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
-                .flatMap(usuario -> {
-                    Lista lista = new Lista();
-                    lista.setNombre(listaDTO.getNombre());
-                    lista.setDescripcion(listaDTO.getDescripcion());
-                    lista.setUsername(usuario.getUsername());
-                    lista.setPublica("N");
+    public Mono<ListaDTO> createLista(ListaReqDTO listaDTO) {
+        return getCurrentUserId().flatMap(userId -> usuarioDAO.findById(userId)
+               .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
+               .flatMap(usuario -> {
+                   Lista lista = new Lista();
+                   lista.setNombre(listaDTO.getNombre());
+                   lista.setDescripcion(listaDTO.getDescripcion());
+                   lista.setUsername(usuario.getUsername());
+                   lista.setPublica("N");
 
-                    return listaDAO.save(lista);
-                })
-                .map(ListaMapper::toDTO);
+                   return listaDAO.save(lista);
+               })
+               .map(ListaMapper::toDTO));
+
+
     }
 
     @Override
-    public Mono<ListaDTO> updateLista(String id, String userId, ListaReqDTO listaDTO) {
+    public Mono<ListaDTO> updateLista(String id, ListaReqDTO listaDTO) {
         if (!id.equals(listaDTO.getId())) {
             return Mono.error(new BadRequestException(ID_NOT_MATCH));
         }
 
-        // 1. Buscamos al usuario por su ID para conocer su username real
-        return usuarioDAO.findById(userId)
+        return getCurrentUserId().flatMap(userId -> {
+            // 1. Buscamos al usuario por su ID para conocer su username real
+            return usuarioDAO.findById(userId)
+                    .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
+                    .flatMap(usuario -> {
+                        String usernameDelSolicitante = usuario.getUsername();
+
+                        return listaDAO.findById(id)
+                                .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
+                                .flatMap(listaExistente -> {
+
+                                    if (!listaExistente.getUsername().equals(usernameDelSolicitante)) {
+                                        return Mono.error(new ForbiddenException(USER_FORBIDDEN));
+                                    }
+
+                                    listaExistente.setNombre(listaDTO.getNombre());
+                                    listaExistente.setDescripcion(listaDTO.getDescripcion());
+                                    listaExistente.setPublica(listaDTO.getPublica() != null && listaDTO.getPublica() ? "S" : "N");
+
+                                    return listaDAO.save(listaExistente);
+                                });
+                    })
+                    .map(ListaMapper::toDTO);
+        });
+
+    }
+
+    @Override
+    public Mono<Void> deleteLista(String id) {
+        return getCurrentUserId().flatMap(userId -> usuarioDAO.findById(userId)
                 .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
                 .flatMap(usuario -> {
                     String usernameDelSolicitante = usuario.getUsername();
 
                     return listaDAO.findById(id)
                             .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
-                            .flatMap(listaExistente -> {
-
-                                if (!listaExistente.getUsername().equals(usernameDelSolicitante)) {
-                                    return Mono.error(new ForbiddenException(USER_FORBIDDEN));
-                                }
-
-                                listaExistente.setNombre(listaDTO.getNombre());
-                                listaExistente.setDescripcion(listaDTO.getDescripcion());
-                                listaExistente.setPublica(listaDTO.getPublica() != null && listaDTO.getPublica() ? "S" : "N");
-
-                                return listaDAO.save(listaExistente);
-                            });
-                })
-                .map(ListaMapper::toDTO);
-    }
-
-    @Override
-    public Mono<Void> deleteLista(String id, String userId) {
-        return usuarioDAO.findById(userId)
-                        .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
-                        .flatMap(usuario -> {
-                            String usernameDelSolicitante = usuario.getUsername();
-
-                            return listaDAO.findById(id)
-                                    .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
-                                    .flatMap(lista -> {
-                                        if (!lista.getUsername().equals(usernameDelSolicitante)) {
-                                            return Mono.error(new ForbiddenException(USER_FORBIDDEN));
-                                        }
-                                        return listaDAO.delete(lista);
-                                    });
-                        });
-
-    }
-
-    @Override
-    public Mono<ListaDTO> addMovieToList(String userId, String listaId, Long movieId) {
-        return usuarioDAO.findById(userId)
-                .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
-                .flatMap(usuario -> {
-                    String usernameDelSolicitante = usuario.getUsername();
-
-                    return listaDAO.findById(listaId)
-                            .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
                             .flatMap(lista -> {
                                 if (!lista.getUsername().equals(usernameDelSolicitante)) {
                                     return Mono.error(new ForbiddenException(USER_FORBIDDEN));
                                 }
+                                return listaDAO.delete(lista);
+                            });
+                }));
 
-                                // Verificamos si la película ya existe en nuestro subdocumento embebido para evitar duplicados
-                                boolean yaExiste = lista.getMovies().stream()
-                                        .anyMatch(preview -> preview.getId().equals(movieId));
 
-                                if (yaExiste) {
-                                    return Mono.just(lista);
-                                }
+    }
 
-                                return movieDAO.findMovieById(movieId)
-                                        .map(movie -> {
-                                            MovieLista movieLista = new MovieLista(movie.getId());
-                                            movieLista.setTitle(movie.getTitle());
-                                            movieLista.setPosterPath(movie.getPosterPath());
-                                            movieLista.setReleaseDate(movie.getReleaseDate());
+    @Override
+    public Mono<ListaDTO> addMovieToList(String listaId, Long movieId) {
 
-                                            return movieLista;
-                                        })
-                                        .switchIfEmpty(Mono.defer(() -> fetchMovieFromTMDB(movieId)))
-                                        .flatMap(moviePreview -> {
-                                            lista.getMovies().add(moviePreview);
-                                            return Mono.just(lista);
-                                        });
-                            })
-                            .flatMap(listaDAO::save)
-                            .map(ListaMapper::toDTO);
-                });
+        return getCurrentUserId().flatMap(userId -> usuarioDAO.findById(userId)
+                .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
+                .flatMap(usuario -> {
+                        String usernameDelSolicitante = usuario.getUsername();
+
+                        return listaDAO.findById(listaId)
+                                .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
+                                .flatMap(lista -> {
+                                    if (!lista.getUsername().equals(usernameDelSolicitante)) {
+                                        return Mono.error(new ForbiddenException(USER_FORBIDDEN));
+                                    }
+
+                                    // Verificamos si la película ya existe en nuestro subdocumento embebido para evitar duplicados
+                                    boolean yaExiste = lista.getMovies().stream()
+                                            .anyMatch(preview -> preview.getId().equals(movieId));
+
+                                    if (yaExiste) {
+                                        return Mono.just(lista);
+                                    }
+
+                                    return movieDAO.findMovieById(movieId)
+                                            .map(movie -> {
+                                                MovieLista movieLista = new MovieLista(movie.getId());
+                                                movieLista.setTitle(movie.getTitle());
+                                                movieLista.setPosterPath(movie.getPosterPath());
+                                                movieLista.setReleaseDate(movie.getReleaseDate());
+
+                                                return movieLista;
+                                            })
+                                            .switchIfEmpty(Mono.defer(() -> fetchMovieFromTMDB(movieId)))
+                                            .flatMap(moviePreview -> {
+                                                lista.getMovies().add(moviePreview);
+                                                return Mono.just(lista);
+                                            });
+                                })
+                                .flatMap(listaDAO::save)
+                                .map(ListaMapper::toDTO);
+                        }));
+
+
 
     }
 
@@ -240,27 +249,28 @@ public class ListaServiceImpl extends BaseServiceImpl implements ListaService {
     }
 
     @Override
-    public Mono<Void> deleteMovieFromList(String userId, String listaId, Long movieId) {
-        return usuarioDAO.findById(userId)
+    public Mono<Void> deleteMovieFromList(String listaId, Long movieId) {
+        return getCurrentUserId().flatMap(userId -> usuarioDAO.findById(userId)
                 .switchIfEmpty(Mono.error(new ForbiddenException(USER_FORBIDDEN)))
                 .flatMap(usuario -> {
-                    String usernameDelSolicitante = usuario.getUsername();
+                            String usernameDelSolicitante = usuario.getUsername();
 
-                    return listaDAO.findById(listaId)
-                            .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
-                            .flatMap(lista -> {
-                                if (!lista.getUsername().equals(usernameDelSolicitante)) {
-                                    return Mono.error(new ForbiddenException(USER_FORBIDDEN));
-                                }
+                            return listaDAO.findById(listaId)
+                                    .switchIfEmpty(Mono.error(new NotFoudException(LISTA_NOT_FOUND)))
+                                    .flatMap(lista -> {
+                                        if (!lista.getUsername().equals(usernameDelSolicitante)) {
+                                            return Mono.error(new ForbiddenException(USER_FORBIDDEN));
+                                        }
 
-                                boolean removed = lista.getMovies().removeIf(movie -> movie.getId().equals(movieId));
-                                if (!removed) {
-                                    return Mono.error(new NotFoudException(MOVIE_NOTFOUND));
-                                }
+                                        boolean removed = lista.getMovies().removeIf(movie -> movie.getId().equals(movieId));
+                                        if (!removed) {
+                                            return Mono.error(new NotFoudException(MOVIE_NOTFOUND));
+                                        }
 
-                                return listaDAO.save(lista).then();
-                            });
-                });
+                                        return listaDAO.save(lista).then();
+                                    });
+                        })
+        );
 
     }
 

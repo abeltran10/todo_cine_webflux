@@ -9,17 +9,17 @@ public interface ListaService {
 
     Mono<ListaDTO> getListaById(String id);
 
-    Mono<ListaDTO> createLista(String userId, ListaReqDTO listaDTO);
+    Mono<ListaDTO> createLista(ListaReqDTO listaDTO);
 
-    Mono<ListaDTO> updateLista(String id, String userId, ListaReqDTO listaDTO);
+    Mono<ListaDTO> updateLista(String id, ListaReqDTO listaDTO);
 
-    Mono<Void> deleteLista(String id, String userId);
+    Mono<Void> deleteLista(String id);
 
     Mono<Paginator<ListaDTO>> getListas(String userId, Integer page);
 
-    Mono<ListaDTO> addMovieToList(String userId, String listaId, Long movieId);
+    Mono<ListaDTO> addMovieToList(String listaId, Long movieId);
 
-    Mono<Void> deleteMovieFromList(String userId, String listaId, Long movieId);
+    Mono<Void> deleteMovieFromList(String listaId, Long movieId);
 
     Mono<Paginator<ListaDTO>> getListasPublicas(Integer page);
 }

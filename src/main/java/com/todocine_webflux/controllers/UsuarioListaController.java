@@ -34,49 +34,44 @@ public class UsuarioListaController {
 
     @PostMapping
     public Mono<ResponseEntity<ListaDTO>> createLista(
-            @NotBlank @PathVariable("userId") String userId,
             @Valid @RequestBody ListaReqDTO listaDTO) {
 
-        return listaService.createLista(userId, listaDTO)
+        return listaService.createLista(listaDTO)
                 .map(createdLista -> new ResponseEntity<>(createdLista, HttpStatus.CREATED));
     }
 
     @PutMapping("/{id}")
     public Mono<ResponseEntity<ListaDTO>> updateLista(
-            @NotBlank @PathVariable("userId") String userId,
             @NotBlank @PathVariable("id") String id,
             @Valid @RequestBody ListaReqDTO listaDTO) {
 
-        return listaService.updateLista(id, userId, listaDTO)
+        return listaService.updateLista(id, listaDTO)
                 .map(updatedLista -> new ResponseEntity<>(updatedLista, HttpStatus.OK));
     }
 
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteLista(
-            @NotBlank @PathVariable("userId") String userId,
             @NotBlank @PathVariable("id") String id) {
 
-        return listaService.deleteLista(id, userId)
+        return listaService.deleteLista(id)
                 .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
     }
 
     @PostMapping("/{listaId}/movies/{movieId}")
     public Mono<ResponseEntity<ListaDTO>> addMovieToList(
-            @NotBlank @PathVariable("userId") String userId,
             @NotBlank @PathVariable("listaId") String listaId,
             @NotNull @PathVariable("movieId") Long movieId) {
 
-        return listaService.addMovieToList(userId, listaId, movieId)
+        return listaService.addMovieToList(listaId, movieId)
                 .map(updatedLista -> new ResponseEntity<>(updatedLista, HttpStatus.OK));
     }
 
     @DeleteMapping("/{listaId}/movies/{movieId}")
     public Mono<ResponseEntity<Void>> deleteMovieFromList(
-            @NotBlank @PathVariable("userId") String userId,
             @NotBlank @PathVariable("listaId") String listaId,
             @NotNull @PathVariable("movieId") Long movieId) {
 
-        return listaService.deleteMovieFromList(userId, listaId, movieId)
+        return listaService.deleteMovieFromList(listaId, movieId)
                 .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
     }
 }
